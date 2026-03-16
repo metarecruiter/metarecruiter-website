@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60" width="100%" height="100%">
+  <defs>
+    <pattern id="stripes" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(-45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#4A85A4" stroke-width="2.5" />
+    </pattern>
+  </defs>
+  <!-- Left Mountain -->
+  <polygon points="15,55 40,5 65,55" fill="none" stroke="none" />
+  <polygon points="15,55 40,5 65,55" fill="url(#stripes)" />
+  <!-- Right Mountain -->
+  <polygon points="35,55 60,5 85,55" fill="none" stroke="none" />
+  <polygon points="35,55 60,5 85,55" fill="url(#stripes)" />
+  <!-- Center Solid Triangle -->
+  <polygon points="35,55 50,25 65,55" fill="#4A85A4" />
+</svg>

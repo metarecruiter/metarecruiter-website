@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Reset & Base ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #F5F3EE;
+  color: #111111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Global Noise Overlay ───────────────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  background-repeat: repeat;
+}
+
+/* ─── Typography Utilities ───────────────────────────────────────────── */
+.font-serif-drama { font-family: 'DM Serif Display', serif; font-style: italic; }
+.font-mono-data   { font-family: 'Space Mono', monospace; }
+
+/* ─── Magnetic Button ────────────────────────────────────────────────── */
+.btn-magnetic {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.btn-magnetic:hover {
+  transform: scale(1.03);
+}
+.btn-magnetic .btn-bg {
+  position: absolute;
+  inset: 0;
+  transform: translateX(-105%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.btn-magnetic:hover .btn-bg {
+  transform: translateX(0);
+}
+
+/* ─── Link Lift ──────────────────────────────────────────────────────── */
+.link-lift {
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+.link-lift:hover { transform: translateY(-1px); }
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F5F3EE; }
+::-webkit-scrollbar-thumb { background: #4A85A4; border-radius: 3px; }
+
+/* ─── Section Utilities ──────────────────────────────────────────────── */
+.section-pad { padding: 7rem 1.5rem; }
+@media (min-width: 768px) { .section-pad { padding: 9rem 3rem; } }
+
+/* ─── Card ───────────────────────────────────────────────────────────── */
+.card-surface {
+  background: #F5F3EE;
+  border: 1px solid rgba(17,17,17,0.12);
+  border-radius: 2rem;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.06);
+}
+
+/* ─── Cursor blink ───────────────────────────────────────────────────── */
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+.cursor-blink { animation: blink 1s step-end infinite; }
+
+/* ─── Pulsing dot ────────────────────────────────────────────────────── */
+@keyframes pulse-dot { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.6); opacity:0.5; } }
+.pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+
+/* ─── SVG Waveform animation ─────────────────────────────────────────── */
+@keyframes dash-flow {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+.waveform-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash-flow 3s linear infinite;
+}
+
+/* ─── Apply Now glow pulse ───────────────────────────────────────────── */
+@keyframes apply-glow {
+  0%, 100% { box-shadow: 0 0 0 2px #4A85A4, 0 4px 20px #4A85A455; }
+  50%       { box-shadow: 0 0 0 2px #4A85A4, 0 6px 32px #4A85A488, 0 0 0 5px #4A85A422; }
+}
+.btn-apply-now { animation: apply-glow 2.4s ease-in-out infinite; }
+
+/* ─── Stacking cards ─────────────────────────────────────────────────── */
+.protocol-card {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
