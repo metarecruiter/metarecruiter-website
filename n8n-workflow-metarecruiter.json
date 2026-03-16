@@ -1,0 +1,449 @@
+{
+  "name": "MetaRecruiter - Form Submissions",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "metarecruiter-forms",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300],
+      "webhookId": "metarecruiter-forms"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.headers['x-webhook-secret'] }}",
+              "value2": "YOUR_SECRET_TOKEN_HERE"
+            }
+          ]
+        }
+      },
+      "id": "validate-secret",
+      "name": "Validate Secret",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "notes": "OPTIONAL: Replace YOUR_SECRET_TOKEN_HERE with your actual secret"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "switch-form-type",
+      "name": "Route by Form Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [650, 200],
+      "parameters": {
+        "rules": {
+          "rules": [
+            {
+              "operation": "equal",
+              "value1": "={{ $json.body.formType }}",
+              "value2": "apply-driver",
+              "output": 0
+            },
+            {
+              "operation": "equal",
+              "value1": "={{ $json.body.formType }}",
+              "value2": "owner-operator",
+              "output": 1
+            },
+            {
+              "operation": "equal",
+              "value1": "={{ $json.body.formType }}",
+              "value2": "hire-drivers",
+              "output": 2
+            },
+            {
+              "operation": "equal",
+              "value1": "={{ $json.body.formType }}",
+              "value2": "contact",
+              "output": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://services.leadconnectorhq.com/contacts/",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "goHighLevelApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "locationId",
+              "value": "YOUR_GHL_LOCATION_ID"
+            },
+            {
+              "name": "firstName",
+              "value": "={{ $json.body.firstName }}"
+            },
+            {
+              "name": "lastName",
+              "value": "={{ $json.body.lastName }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.body.email }}"
+            },
+            {
+              "name": "phone",
+              "value": "={{ $json.body.phone }}"
+            },
+            {
+              "name": "tags",
+              "value": "={{ ['driver-applicant', $json.body.qualified ? 'qualified' : 'not-qualified'] }}"
+            },
+            {
+              "name": "source",
+              "value": "Website - Driver Application"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ghl-driver",
+      "name": "GHL - Driver Application",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 50],
+      "notes": "Creates contact in GHL for driver applications"
+    },
+    {
+      "parameters": {
+        "url": "https://services.leadconnectorhq.com/contacts/",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "goHighLevelApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "locationId",
+              "value": "YOUR_GHL_LOCATION_ID"
+            },
+            {
+              "name": "firstName",
+              "value": "={{ $json.body.firstName }}"
+            },
+            {
+              "name": "lastName",
+              "value": "={{ $json.body.lastName }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.body.email }}"
+            },
+            {
+              "name": "phone",
+              "value": "={{ $json.body.phone }}"
+            },
+            {
+              "name": "tags",
+              "value": "={{ ['owner-operator', 'qualified'] }}"
+            },
+            {
+              "name": "source",
+              "value": "Website - Owner Operator Application"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ghl-owner-operator",
+      "name": "GHL - Owner Operator",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 150],
+      "notes": "Creates contact in GHL for owner operator applications"
+    },
+    {
+      "parameters": {
+        "url": "https://services.leadconnectorhq.com/contacts/",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "goHighLevelApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "locationId",
+              "value": "YOUR_GHL_LOCATION_ID"
+            },
+            {
+              "name": "firstName",
+              "value": "={{ $json.body.name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.body.email }}"
+            },
+            {
+              "name": "phone",
+              "value": "={{ $json.body.phone }}"
+            },
+            {
+              "name": "tags",
+              "value": "={{ ['hiring-interest', 'carrier'] }}"
+            },
+            {
+              "name": "source",
+              "value": "Website - Hire Drivers"
+            },
+            {
+              "name": "customField:company_name",
+              "value": "={{ $json.body.company }}"
+            },
+            {
+              "name": "customField:drivers_needed",
+              "value": "={{ $json.body.drivers }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ghl-hire-drivers",
+      "name": "GHL - Hire Drivers",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 250],
+      "notes": "Creates contact in GHL for carrier inquiries"
+    },
+    {
+      "parameters": {
+        "url": "https://services.leadconnectorhq.com/contacts/",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "goHighLevelApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "locationId",
+              "value": "YOUR_GHL_LOCATION_ID"
+            },
+            {
+              "name": "firstName",
+              "value": "={{ $json.body.firstName }}"
+            },
+            {
+              "name": "lastName",
+              "value": "={{ $json.body.lastName }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.body.email }}"
+            },
+            {
+              "name": "phone",
+              "value": "={{ $json.body.phone }}"
+            },
+            {
+              "name": "tags",
+              "value": "={{ ['general-contact'] }}"
+            },
+            {
+              "name": "source",
+              "value": "Website - Contact Form"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ghl-contact",
+      "name": "GHL - Contact Form",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 350],
+      "notes": "Creates contact in GHL for general contact form"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"Form submitted successfully\" } }}"
+      },
+      "id": "success-response",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1050, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseCode": 401,
+        "responseBody": "={{ { \"success\": false, \"error\": \"Invalid webhook secret\" } }}"
+      },
+      "id": "error-unauthorized",
+      "name": "Error - Unauthorized",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [650, 400],
+      "notes": "Triggered when webhook secret validation fails"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Secret",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Secret": {
+      "main": [
+        [
+          {
+            "node": "Route by Form Type",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error - Unauthorized",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Form Type": {
+      "main": [
+        [
+          {
+            "node": "GHL - Driver Application",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "GHL - Owner Operator",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "GHL - Hire Drivers",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "GHL - Contact Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL - Driver Application": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL - Owner Operator": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL - Hire Drivers": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL - Contact Form": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "id": "metarecruiter-forms",
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "tags": []
+}
