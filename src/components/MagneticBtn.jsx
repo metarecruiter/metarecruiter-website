@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function MagneticBtn({
   href, type = 'button', onClick,
@@ -6,10 +7,10 @@ export default function MagneticBtn({
   children, style, className,
 }) {
   const [hov, setHov] = useState(false)
-  const El = href ? 'a' : 'button'
+  const El = href ? Link : 'button'
   return (
     <El
-      href={href}
+      to={href}
       type={type}
       onClick={onClick}
       onMouseEnter={() => setHov(true)}
