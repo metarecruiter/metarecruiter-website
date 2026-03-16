@@ -2,6 +2,7 @@ import { CheckCircle2, Shield, Clock, Users, Phone, Mail } from 'lucide-react'
 import { C } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
 import { useState } from 'react'
+import { submitToN8N } from '../utils/formSubmit'
 
 const HERO_IMG = '/hire-hero.png'
 
@@ -24,12 +25,29 @@ function ContactForm() {
     const { name, value, type, checked } = e.target
     setForm(f => ({ ...f, [name]: type === 'checkbox' ? checked : value }))
   }
-  const submit = e => {
+  const submit = async e => {
     e.preventDefault()
-    const subject = encodeURIComponent('Carrier Inquiry — MetaRecruiter')
-    const body = encodeURIComponent(`Company: ${form.company}\nContact: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nDrivers Needed: ${form.drivers}\n\nMessage:\n${form.message}\n\nMarketing consent: ${form.consentMarketing ? 'Yes' : 'No'}\nNon-marketing consent: ${form.consentNonMarketing ? 'Yes' : 'No'}`)
-    window.open(`mailto:support@metarecruiter.com?subject=${subject}&body=${body}`)
-    setSent(true); setTimeout(() => setSent(false), 4000)
+
+    const payload = {
+      ...form,
+      tags: ['hiring-interest', 'carrier'],
+      pipelineStage: 'New Lead'
+    }
+
+    // Submit to N8N webhook
+    const result = await submitToN8N('hire-drivers', payload)
+
+    // Fallback: open mailto if webhook not configured
+    if (!result.success && result.error === 'WEBHOOK_NOT_CONFIGURED') {
+      const subject = encodeURIComponent('Carrier Inquiry — MetaRecruiter')
+      const body = encodeURIComponent(
+        `Company: ${form.company}\nContact: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nDrivers Needed: ${form.drivers}\n\nMessage:\n${form.message}\n\nMarketing consent: ${form.consentMarketing ? 'Yes' : 'No'}\nNon-marketing consent: ${form.consentNonMarketing ? 'Yes' : 'No'}`
+      )
+      window.open(`mailto:support@metarecruiter.com?subject=${subject}&body=${body}`)
+    }
+
+    setSent(true)
+    setTimeout(() => setSent(false), 4000)
   }
   const inputStyle = { width: '100%', fontFamily: '"Space Grotesk",sans-serif', fontSize: '0.95rem', padding: '0.85rem 1rem', borderRadius: '0.75rem', border: '1.5px solid rgba(17,17,17,0.15)', color: C.ink, background: '#fff', outline: 'none' }
   return (

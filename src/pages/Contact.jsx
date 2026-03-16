@@ -2,10 +2,7 @@ import { useState } from 'react'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { C } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
-
-// ── GHL / Webhook URL (fill in when ready) ───────────────────────────
-// const CONTACT_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/YOUR_WEBHOOK_ID/webhook-trigger/...'
-const CONTACT_WEBHOOK_URL = ''
+import { submitToN8N } from '../utils/formSubmit'
 
 export default function Contact() {
   const [form, setForm] = useState({ firstName: '', lastName: '', phone: '', email: '', consentMarketing: false, consentNonMarketing: false })
@@ -20,21 +17,20 @@ export default function Contact() {
     e.preventDefault()
     setStatus('sending')
     try {
-      if (CONTACT_WEBHOOK_URL) {
-        await fetch(CONTACT_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            firstName: form.firstName,
-            lastName: form.lastName,
-            phone: form.phone,
-            email: form.email,
-            consentMarketing: form.consentMarketing,
-            consentNonMarketing: form.consentNonMarketing,
-            source: 'MetaRecruiter Contact Form',
-          }),
-        })
+      const payload = {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        phone: form.phone,
+        email: form.email,
+        consentMarketing: form.consentMarketing,
+        consentNonMarketing: form.consentNonMarketing,
+        tags: ['general-contact'],
+        pipelineStage: 'New Lead'
       }
+
+      // Submit to N8N webhook
+      await submitToN8N('contact', payload)
+
       setStatus('sent')
     } catch {
       setStatus('error')

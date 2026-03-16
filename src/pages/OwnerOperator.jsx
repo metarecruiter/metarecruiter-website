@@ -2,10 +2,7 @@ import { useState } from 'react'
 import { CheckCircle2, Truck, DollarSign, Map, Clock, XCircle } from 'lucide-react'
 import { C } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
-
-// ── GHL CRM Webhook — Owner Operator pipeline (fill in when ready) ────
-// const GHL_WEBHOOK_URL_OO = 'https://services.leadconnectorhq.com/hooks/YOUR_OO_WEBHOOK_ID/webhook-trigger/...'
-const GHL_WEBHOOK_URL_OO = ''
+import { submitToN8N } from '../utils/formSubmit'
 
 const HERO_IMG = '/owner-op-hero.jpg'
 
@@ -254,39 +251,44 @@ function OwnerOpForm() {
     }
   }
 
-  const submitForm = () => {
-    const summary = [
-      'Owner-Operator Application — MetaRecruiter',
-      '',
-      `Name: ${form.firstName} ${form.lastName}`,
-      `Email: ${form.email}`,
-      `Phone: ${form.phone}`,
-      '',
-      `CDL Class A: ${form.hasCdl}`,
-      `Owns Truck: ${form.ownsTruck}`,
-      `Truck: ${form.truckMake} ${form.truckYear}`.trim(),
-      `FMCSA Authority: ${form.hasFmcsa}`,
-      form.mcNumber  ? `MC Number: ${form.mcNumber}`  : '',
-      form.dotNumber ? `DOT Number: ${form.dotNumber}` : '',
-      '',
-      `Experience: ${form.yearsExp}`,
-      `Preferred Routes: ${form.routes}`,
-      form.startDate ? `Start Date: ${form.startDate}` : '',
-      '',
-      `Drug Test: ${form.drugTest}`,
-      `Work Authorization: ${form.workAuth}`,
-    ].filter(Boolean).join('\n')
+  const submitForm = async () => {
+    const payload = {
+      ...form,
+      tags: ['owner-operator', 'qualified'],
+      pipelineStage: 'New Lead'
+    }
 
-    if (GHL_WEBHOOK_URL_OO) {
-      fetch(GHL_WEBHOOK_URL_OO, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, type: 'owner-operator', tags: ['owner-operator', 'qualified'] }),
-      }).catch(() => {})
-    } else {
+    // Submit to N8N webhook
+    const result = await submitToN8N('owner-operator', payload)
+
+    // Fallback: open mailto if webhook not configured
+    if (!result.success && result.error === 'WEBHOOK_NOT_CONFIGURED') {
+      const summary = [
+        'Owner-Operator Application — MetaRecruiter',
+        '',
+        `Name: ${form.firstName} ${form.lastName}`,
+        `Email: ${form.email}`,
+        `Phone: ${form.phone}`,
+        '',
+        `CDL Class A: ${form.hasCdl}`,
+        `Owns Truck: ${form.ownsTruck}`,
+        `Truck: ${form.truckMake} ${form.truckYear}`.trim(),
+        `FMCSA Authority: ${form.hasFmcsa}`,
+        form.mcNumber  ? `MC Number: ${form.mcNumber}`  : '',
+        form.dotNumber ? `DOT Number: ${form.dotNumber}` : '',
+        '',
+        `Experience: ${form.yearsExp}`,
+        `Preferred Routes: ${form.routes}`,
+        form.startDate ? `Start Date: ${form.startDate}` : '',
+        '',
+        `Drug Test: ${form.drugTest}`,
+        `Work Authorization: ${form.workAuth}`,
+      ].filter(Boolean).join('\n')
+
       const subject = encodeURIComponent('Owner-Operator Application — MetaRecruiter')
       window.open(`mailto:support@metarecruiter.com?subject=${subject}&body=${encodeURIComponent(summary)}`)
     }
+
     setResult('qualified')
   }
 

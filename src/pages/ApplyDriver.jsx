@@ -3,11 +3,7 @@ import { CheckCircle2, XCircle, ChevronRight, Truck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { C } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
-
-// ── GHL CRM Webhook (fill in when ready) ─────────────────────────────
-// const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/YOUR_WEBHOOK_ID/webhook-trigger/...'
-// When set, qualified and disqualified submissions are POSTed as JSON with a "tags" field.
-const GHL_WEBHOOK_URL = ''
+import { submitToN8N } from '../utils/formSubmit'
 
 // ─── Qualification rules ─────────────────────────────────────────────
 const isDisqualified = (f) => {
@@ -158,30 +154,34 @@ export default function ApplyDriver() {
     const tag = qualified ? 'qualified-driver' : 'not-qualified-driver'
     const stage = qualified ? 'New Lead' : 'Not Qualified'
 
-    const payload = { ...form, tags: [tag], pipelineStage: stage, source: 'website-driver-application' }
+    const payload = {
+      ...form,
+      tags: [tag],
+      pipelineStage: stage,
+      qualified
+    }
 
-    // POST to GHL if webhook URL is configured
-    if (GHL_WEBHOOK_URL) {
-      try { await fetch(GHL_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }) } catch (_) { /* silent */ }
+    // Submit to N8N webhook
+    const result = await submitToN8N('apply-driver', payload)
+
+    // Fallback: open mailto if webhook not configured or failed
+    if (!result.success && result.error === 'WEBHOOK_NOT_CONFIGURED' && qualified) {
+      const subject = encodeURIComponent('New Qualified Driver Application — MetaRecruiter')
+      const body = encodeURIComponent(
+        `New qualified driver application received:\n\n` +
+        `Name: ${form.firstName} ${form.lastName}\n` +
+        `Email: ${form.email}\nPhone: ${form.phone}\n` +
+        `CDL Class A: ${form.hasCdl}\nOTR Experience: ${form.otrExp}\n` +
+        `Accidents (3yr): ${form.accidents}\nMajor Violations: ${form.violations}\n` +
+        `SAP Program: ${form.sap}\nDrug Test: ${form.drugTest}\n` +
+        `Work Auth: ${form.workAuth}\nEnglish: ${form.english}\n` +
+        `Route Type: ${form.routeType}\nStart Date: ${form.startDate}\n` +
+        `Notes: ${form.notes || 'None'}\n\nPipeline Stage: ${stage}`
+      )
+      window.open(`mailto:support@metarecruiter.com?subject=${subject}&body=${body}`)
     }
 
     if (qualified) {
-      // Fallback: open mailto with all answers
-      if (!GHL_WEBHOOK_URL) {
-        const subject = encodeURIComponent('New Qualified Driver Application — MetaRecruiter')
-        const body = encodeURIComponent(
-          `New qualified driver application received:\n\n` +
-          `Name: ${form.firstName} ${form.lastName}\n` +
-          `Email: ${form.email}\nPhone: ${form.phone}\n` +
-          `CDL Class A: ${form.hasCdl}\nOTR Experience: ${form.otrExp}\n` +
-          `Accidents (3yr): ${form.accidents}\nMajor Violations: ${form.violations}\n` +
-          `SAP Program: ${form.sap}\nDrug Test: ${form.drugTest}\n` +
-          `Work Auth: ${form.workAuth}\nEnglish: ${form.english}\n` +
-          `Route Type: ${form.routeType}\nStart Date: ${form.startDate}\n` +
-          `Notes: ${form.notes || 'None'}\n\nPipeline Stage: ${stage}`
-        )
-        window.open(`mailto:support@metarecruiter.com?subject=${subject}&body=${body}`)
-      }
       setResult('qualified')
     } else {
       setReason(disqualifyReason)
