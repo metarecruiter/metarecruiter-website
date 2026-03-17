@@ -21,7 +21,7 @@ function Hero() {
   }, [])
 
   return (
-    <section ref={ref} style={{ height: '100dvh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'flex-end', paddingBottom: '5rem', paddingLeft: 'clamp(1.5rem,6vw,7rem)', paddingRight: 'clamp(1.5rem,6vw,7rem)' }}>
+    <section ref={ref} style={{ height: '100vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'flex-end', paddingBottom: '5rem', paddingLeft: 'clamp(1.5rem,6vw,7rem)', paddingRight: 'clamp(1.5rem,6vw,7rem)' }}>
       <img src={HERO_IMG} alt="Highway" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(17,17,17,0.97) 0%,rgba(17,17,17,0.55) 55%,rgba(17,17,17,0.2) 100%)' }} />
 
@@ -40,14 +40,14 @@ function Hero() {
         <p className="hero-line font-sans" style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1rem,1.6vw,1.25rem)', maxWidth: '520px', lineHeight: 1.7, marginBottom: '2.5rem' }}>
           MetaRecruiter connects elite CDL Class A drivers with top-tier transportation carriers — precision placement, zero compromise.
         </p>
-        <div className="hero-line flex flex-wrap gap-3 items-center">
-          <MagneticBtn href="/apply" bg={C.signal} hoverBg="#fff" color="#fff" hoverColor={C.signal} style={{ padding: '1rem 2.2rem', borderRadius: '9999px', fontSize: '1rem', fontWeight: 700 }}>
+        <div className="hero-line flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-full sm:w-auto mt-4">
+          <MagneticBtn className="w-full sm:w-auto" href="/apply" bg={C.signal} hoverBg="#fff" color="#fff" hoverColor={C.signal} style={{ padding: '1.2rem 2.2rem', borderRadius: '9999px', fontSize: '1.1rem', fontWeight: 700 }}>
             Apply as Driver
           </MagneticBtn>
-          <MagneticBtn href="/owner-operators" bg="rgba(255,255,255,0.1)" hoverBg={C.signal} color="#fff" hoverColor="#fff" style={{ padding: '1rem 2.2rem', borderRadius: '9999px', fontSize: '1rem', border: '1px solid rgba(255,255,255,0.3)' }}>
+          <MagneticBtn className="w-full sm:w-auto" href="/owner-operators" bg="rgba(255,255,255,0.1)" hoverBg={C.signal} color="#fff" hoverColor="#fff" style={{ padding: '1.2rem 2.2rem', borderRadius: '9999px', fontSize: '1.1rem', border: '1px solid rgba(255,255,255,0.3)' }}>
             Owner Operators
           </MagneticBtn>
-          <MagneticBtn href="/hire-drivers" bg={C.ink} hoverBg={C.signal} color="#fff" hoverColor="#fff" style={{ padding: '1rem 2.2rem', borderRadius: '9999px', fontSize: '1rem', border: '1px solid rgba(255,255,255,0.15)' }}>
+          <MagneticBtn className="w-full sm:w-auto" href="/hire-drivers" bg={C.ink} hoverBg={C.signal} color="#fff" hoverColor="#fff" style={{ padding: '1.2rem 2.2rem', borderRadius: '9999px', fontSize: '1.1rem', border: '1px solid rgba(255,255,255,0.15)' }}>
             Hire Drivers <ArrowRight size={15} />
           </MagneticBtn>
         </div>

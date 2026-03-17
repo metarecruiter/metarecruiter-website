@@ -27,16 +27,16 @@ export default function Navbar() {
 
   useEffect(() => setOpen(false), [location.pathname])
 
-  const solid = scrolled || !isHome
+  const solid = scrolled || !isHome || open
   const textColor = solid ? C.ink : 'rgba(255,255,255,0.9)'
   const bgStyle = solid
-    ? { background: 'rgba(245,243,238,0.95)', backdropFilter: 'blur(20px)', border: '1px solid rgba(17,17,17,0.1)' }
+    ? { background: '#F5F3EE', backdropFilter: 'blur(20px)', border: '1px solid rgba(17,17,17,0.1)' }
     : { background: 'transparent', border: '1px solid transparent' }
 
   return (
     <nav
       className="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500"
-      style={{ width: '96%', maxWidth: '1380px', borderRadius: '9999px', padding: '0.7rem 1.5rem', ...bgStyle }}
+      style={{ width: '96%', maxWidth: '1380px', borderRadius: open ? '1.5rem' : '9999px', padding: '0.7rem 1.5rem', ...bgStyle }}
     >
       <div className="flex items-center justify-between gap-4">
 
