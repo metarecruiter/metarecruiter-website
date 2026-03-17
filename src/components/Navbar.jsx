@@ -35,8 +35,8 @@ export default function Navbar() {
 
   return (
     <nav
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500"
-      style={{ width: '96%', maxWidth: '1380px', borderRadius: open ? '1.5rem' : '9999px', padding: '0.7rem 1.5rem', ...bgStyle }}
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 duration-500"
+      style={{ width: '96%', maxWidth: '1380px', borderRadius: open ? '1.5rem' : '100px', padding: '0.7rem 1.5rem', transitionProperty: 'background-color, border-color, box-shadow', ...bgStyle }}
     >
       <div className="flex items-center justify-between gap-4">
 
