@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import { C } from '../theme'
 
@@ -11,6 +12,23 @@ const NAV = [
 ]
 
 export default function Footer() {
+  useEffect(() => {
+    // Load LeadConnector chat widget
+    const script = document.createElement('script')
+    script.src = 'https://widgets.leadconnectorhq.com/loader.js'
+    script.setAttribute('data-resources-url', 'https://widgets.leadconnectorhq.com/chat-widget/loader.js')
+    script.setAttribute('data-widget-id', '69bdbe16db1480246f6a52ab')
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      // Cleanup: remove script when component unmounts
+      if (script.parentNode) {
+        script.parentNode.removeChild(script)
+      }
+    }
+  }, [])
+
   return (
     <footer style={{ background: '#0A0A0A', padding: '4rem 2rem 2.5rem' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
