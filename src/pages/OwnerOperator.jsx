@@ -63,12 +63,11 @@ function OwnerOpForm() {
   const [result, setResult] = useState(null)
   const [disqualReason, setDisqualReason] = useState('')
   const [form, setForm]   = useState({
-    firstName: '', lastName: '', email: '', phone: '',
+    firstName: '', lastName: '', email: '',
     hasCdl: '', ownsTruck: '', truckMake: '', truckYear: '',
     hasFmcsa: '', mcNumber: '', dotNumber: '',
     yearsExp: '', routes: '', startDate: '',
     drugTest: '', workAuth: '',
-    consentMarketing: false, consentNonMarketing: false,
   })
 
   const handle = e => {
@@ -97,10 +96,6 @@ function OwnerOpForm() {
             <div>
               <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Email <span style={{ color: C.signal }}>*</span></label>
               <input name="email" type="email" required value={form.email} onChange={handle} style={inputStyle} />
-            </div>
-            <div>
-              <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Phone <span style={{ color: C.smoke, fontWeight: 400 }}>(optional)</span></label>
-              <input name="phone" type="tel" value={form.phone} onChange={handle} style={inputStyle} />
             </div>
           </div>
         </div>
@@ -254,7 +249,6 @@ function OwnerOpForm() {
         '',
         `Name: ${form.firstName} ${form.lastName}`,
         `Email: ${form.email}`,
-        `Phone: ${form.phone}`,
         '',
         `CDL Class A: ${form.hasCdl}`,
         `Owns Truck: ${form.ownsTruck}`,

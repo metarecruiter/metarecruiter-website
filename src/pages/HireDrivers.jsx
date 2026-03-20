@@ -19,7 +19,7 @@ const TIERS = [
 ]
 
 function ContactForm() {
-  const [form, setForm] = useState({ company: '', name: '', email: '', phone: '', drivers: '', message: '', consentMarketing: false, consentNonMarketing: false })
+  const [form, setForm] = useState({ company: '', name: '', email: '', drivers: '', message: '' })
   const [sent, setSent] = useState(false)
   const handle = e => {
     const { name, value, type, checked } = e.target
@@ -41,7 +41,7 @@ function ContactForm() {
     if (!result.success && result.error === 'WEBHOOK_NOT_CONFIGURED') {
       const subject = encodeURIComponent('Carrier Inquiry — MetaRecruiter')
       const body = encodeURIComponent(
-        `Company: ${form.company}\nContact: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nDrivers Needed: ${form.drivers}\n\nMessage:\n${form.message}\n\nMarketing consent: ${form.consentMarketing ? 'Yes' : 'No'}\nNon-marketing consent: ${form.consentNonMarketing ? 'Yes' : 'No'}`
+        `Company: ${form.company}\nContact: ${form.name}\nEmail: ${form.email}\nDrivers Needed: ${form.drivers}\n\nMessage:\n${form.message}`
       )
       window.open(`mailto:support@metarecruiter.com?subject=${subject}&body=${body}`)
     }
@@ -56,9 +56,9 @@ function ContactForm() {
         <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Company Name <span style={{ color: C.signal }}>*</span></label><input name="company" required value={form.company} onChange={handle} style={inputStyle} /></div>
         <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Your Name <span style={{ color: C.signal }}>*</span></label><input name="name" required value={form.name} onChange={handle} style={inputStyle} /></div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Email <span style={{ color: C.signal }}>*</span></label><input name="email" type="email" required value={form.email} onChange={handle} style={inputStyle} /></div>
-        <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Phone</label><input name="phone" type="tel" value={form.phone} onChange={handle} style={inputStyle} /></div>
+      <div>
+        <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Email <span style={{ color: C.signal }}>*</span></label>
+        <input name="email" type="email" required value={form.email} onChange={handle} style={inputStyle} />
       </div>
       <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>How many drivers do you need?</label>
         <select name="drivers" value={form.drivers} onChange={handle} style={{ ...inputStyle, appearance: 'none' }}>

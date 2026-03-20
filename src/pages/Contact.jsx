@@ -5,7 +5,7 @@ import MagneticBtn from '../components/MagneticBtn'
 import { submitToN8N } from '../utils/formSubmit'
 
 export default function Contact() {
-  const [form, setForm] = useState({ firstName: '', lastName: '', phone: '', email: '', consentMarketing: false, consentNonMarketing: false })
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '' })
   const [status, setStatus] = useState('idle') // 'idle' | 'sending' | 'sent' | 'error'
 
   const handle = e => {
@@ -20,10 +20,7 @@ export default function Contact() {
       const payload = {
         firstName: form.firstName,
         lastName: form.lastName,
-        phone: form.phone,
         email: form.email,
-        consentMarketing: form.consentMarketing,
-        consentNonMarketing: form.consentNonMarketing,
         tags: ['general-contact'],
         pipelineStage: 'New Lead'
       }
@@ -108,11 +105,6 @@ export default function Contact() {
                   <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Last Name <span style={{ color: C.signal }}>*</span></label>
                   <input name="lastName" required value={form.lastName} onChange={handle} placeholder="Last Name" style={inputStyle} />
                 </div>
-              </div>
-
-              <div>
-                <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Phone</label>
-                <input name="phone" type="tel" value={form.phone} onChange={handle} placeholder="Phone" style={inputStyle} />
               </div>
 
               <div>
