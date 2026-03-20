@@ -17,12 +17,12 @@ export default function About() {
       <div style={{ paddingTop: '9rem', paddingBottom: '6rem', paddingLeft: 'clamp(1.5rem,6vw,7rem)', paddingRight: 'clamp(1.5rem,6vw,7rem)', background: C.ink, position: 'relative', overflow: 'hidden' }}>
         <img src={ABOUT_IMG} alt="About" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.08, mixBlendMode: 'luminosity' }} />
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '760px' }}>
-          <span className="font-mono-data text-xs tracking-widest uppercase" style={{ color: C.signal }}>About MetaRecruiter</span>
+          <span className="font-mono-data text-xs tracking-widest uppercase" style={{ color: C.signal }}>About Meta Recruiter</span>
           <h1 className="font-sans font-bold mt-3" style={{ fontSize: 'clamp(2.5rem,6vw,5rem)', color: '#fff', lineHeight: 1.05, letterSpacing: '-0.03em' }}>
             We connect the<br /><span className="font-serif-drama" style={{ color: C.signal }}>people who move America.</span>
           </h1>
           <p className="font-sans mt-5" style={{ color: 'rgba(255,255,255,0.6)', maxWidth: '560px', lineHeight: 1.8, fontSize: '1.05rem' }}>
-            MetaRecruiter is a specialized CDL Class A recruiting and placement agency based in Aberdeen, Maryland. We bridge the gap between skilled drivers and the carriers who need them — with precision, speed, and industry expertise.
+            Meta Recruiter is a specialized CDL Class A recruiting and placement agency based in Aberdeen, Maryland. We bridge the gap between skilled drivers and the carriers who need them — with precision, speed, and industry expertise.
           </p>
         </div>
       </div>
@@ -37,7 +37,7 @@ export default function About() {
                 Precision placement.<br /><span className="font-serif-drama" style={{ color: C.signal }}>Zero compromise.</span>
               </h2>
               <p className="font-sans mb-4" style={{ color: C.smoke, lineHeight: 1.8 }}>
-                The transportation industry runs on trust. Carriers trust their drivers with million-dollar loads. Drivers trust their carriers with their livelihoods. MetaRecruiter exists to make those connections the right way — thoroughly, transparently, and fast.
+                The transportation industry runs on trust. Carriers trust their drivers with million-dollar loads. Drivers trust their carriers with their livelihoods. Meta Recruiter exists to make those connections the right way — thoroughly, transparently, and fast.
               </p>
               <p className="font-sans" style={{ color: C.smoke, lineHeight: 1.8 }}>
                 We specialize exclusively in CDL Class A recruitment. That focus means we know the industry, understand compliance requirements, and bring real expertise to every placement — not a generic staffing approach applied to trucking.

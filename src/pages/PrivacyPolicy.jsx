@@ -26,7 +26,7 @@ export default function PrivacyPolicy() {
         <h1 className="font-sans font-bold mt-3" style={{ fontSize: 'clamp(2rem,5vw,3.5rem)', color: '#fff', lineHeight: 1.05, letterSpacing: '-0.03em' }}>
           Privacy Policy
         </h1>
-        <p className="font-sans mt-2" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem' }}>MetaRecruiter LLC DBA MetaRecruiter</p>
+        <p className="font-sans mt-2" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem' }}>MetaRecruiter LLC DBA Meta Recruiter</p>
         <p className="font-sans mt-1" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.875rem' }}>Last Updated: March 20, 2026</p>
       </div>
 
@@ -37,7 +37,7 @@ export default function PrivacyPolicy() {
           {/* Intro */}
           <div style={{ marginBottom: '2.5rem' }}>
             <p className="font-sans" style={{ color: C.smoke, lineHeight: 1.85, fontSize: '0.975rem', marginBottom: '0.75rem' }}>
-              MetaRecruiter LLC ("MetaRecruiter," "we," "us," or "our") operates the website{' '}
+              MetaRecruiter LLC ("Meta Recruiter," "we," "us," or "our") operates the website{' '}
               <a href="https://metarecruiter.com" style={{ color: C.signal }}>https://metarecruiter.com</a>{' '}
               (the "Site"). This Privacy Policy explains how we collect, use, store, and protect your information when you use our services.
             </p>
@@ -102,7 +102,7 @@ export default function PrivacyPolicy() {
 
           <Section title="3. SMS Text Messaging Communications">
             <p>By providing your phone number through our website forms and checking the applicable consent checkbox, you agree to receive SMS messages from:</p>
-            <p style={{ marginTop: '0.5rem', fontWeight: 600, color: C.ink }}>MetaRecruiter LLC DBA MetaRecruiter</p>
+            <p style={{ marginTop: '0.5rem', fontWeight: 600, color: C.ink }}>MetaRecruiter LLC DBA Meta Recruiter</p>
 
             <SubHead>Types of Messages</SubHead>
             <p>Messages may include:</p>
@@ -193,7 +193,7 @@ export default function PrivacyPolicy() {
 
           <Section title="11. Contact Information">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <p><strong>MetaRecruiter LLC DBA MetaRecruiter</strong></p>
+              <p><strong>MetaRecruiter LLC DBA Meta Recruiter</strong></p>
               <p>1013 Beards Hill Rd<br />Aberdeen, MD 21001<br />United States</p>
               <p>Phone: <a href="tel:+13018610605" style={{ color: C.signal }}>+1 301-861-0605</a></p>
               <p>Email: <a href="mailto:support@metarecruiter.com" style={{ color: C.signal }}>support@metarecruiter.com</a></p>

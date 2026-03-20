@@ -78,7 +78,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <p className="font-mono-data text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
-            © 2026 MetaRecruiter LLC DBA MetaRecruiter. All rights reserved.
+            © 2026 MetaRecruiter LLC DBA Meta Recruiter. All rights reserved.
           </p>
         </div>
       </div>

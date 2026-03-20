@@ -131,7 +131,7 @@ export default function Contact() {
                     style={{ marginTop: '2px', width: '16px', height: '16px', flexShrink: 0, accentColor: C.signal, cursor: 'pointer' }}
                   />
                   <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
-                    I consent to receive marketing messages from MetaRecruiter LLC at the phone number provided. Frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to Opt Out.
+                    I consent to receive marketing messages from MetaRecruiter LLC DBA Meta Recruiter at the phone number provided. Frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to Opt Out.
                   </span>
                 </label>
 
@@ -144,7 +144,7 @@ export default function Contact() {
                     style={{ marginTop: '2px', width: '16px', height: '16px', flexShrink: 0, accentColor: C.signal, cursor: 'pointer' }}
                   />
                   <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
-                    I consent to receive non-marketing messages from MetaRecruiter LLC about my order updates, appointment reminders etc. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
+                    I consent to receive non-marketing messages from MetaRecruiter LLC DBA Meta Recruiter about my order updates, appointment reminders etc. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
                   </span>
                 </label>
               </div>

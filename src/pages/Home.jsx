@@ -38,7 +38,7 @@ function Hero() {
           </span>
         </h1>
         <p className="hero-line font-sans" style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1rem,1.6vw,1.25rem)', maxWidth: '520px', lineHeight: 1.7, marginBottom: '2.5rem' }}>
-          MetaRecruiter connects elite CDL Class A drivers with top-tier transportation carriers — precision placement, zero compromise.
+          Meta Recruiter connects elite CDL Class A drivers with top-tier transportation carriers — precision placement, zero compromise.
         </p>
         <div className="hero-line flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-full sm:w-auto mt-6">
           <MagneticBtn className="w-full sm:w-auto" href="/apply" bg={C.signal} hoverBg="#fff" color="#fff" hoverColor={C.signal} style={{ padding: '1rem 2.2rem', borderRadius: '9999px', fontSize: '1rem', fontWeight: 700 }}>
