@@ -1,12 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { C } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
 import { submitToN8N } from '../utils/formSubmit'
+import { storeUTMParams, getStoredUTMParams } from '../utils/utmCapture'
 
 export default function Contact() {
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '' })
   const [status, setStatus] = useState('idle') // 'idle' | 'sending' | 'sent' | 'error'
+
+  // Capture UTM parameters on mount
+  useEffect(() => {
+    storeUTMParams()
+  }, [])
 
   const handle = e => {
     const { name, value, type, checked } = e.target
@@ -17,10 +23,14 @@ export default function Contact() {
     e.preventDefault()
     setStatus('sending')
     try {
+      // Get UTM parameters
+      const utmParams = getStoredUTMParams()
+
       const payload = {
         firstName: form.firstName,
         lastName: form.lastName,
         email: form.email,
+        ...utmParams,
         tags: ['general-contact'],
         pipelineStage: 'New Lead'
       }

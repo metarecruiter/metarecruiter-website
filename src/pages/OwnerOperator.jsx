@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CheckCircle2, Truck, DollarSign, Map, Clock, XCircle } from 'lucide-react'
 import { C } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
 import { submitToN8N } from '../utils/formSubmit'
+import { storeUTMParams, getStoredUTMParams } from '../utils/utmCapture'
 
 const HERO_IMG = '/owner-op-hero.jpg'
 
@@ -69,6 +70,11 @@ function OwnerOpForm() {
     yearsExp: '', routes: '', startDate: '',
     drugTest: '', workAuth: '',
   })
+
+  // Capture UTM parameters on mount
+  useEffect(() => {
+    storeUTMParams()
+  }, [])
 
   const handle = e => {
     const { name, value, type, checked } = e.target
@@ -233,8 +239,12 @@ function OwnerOpForm() {
   }
 
   const submitForm = async () => {
+    // Get UTM parameters
+    const utmParams = getStoredUTMParams()
+
     const payload = {
       ...form,
+      ...utmParams,
       tags: ['owner-operator', 'qualified'],
       pipelineStage: 'New Lead'
     }

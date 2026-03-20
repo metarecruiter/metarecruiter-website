@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CheckCircle2, XCircle, ChevronRight, Truck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { C } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
 import { submitToN8N } from '../utils/formSubmit'
+import { storeUTMParams, getStoredUTMParams } from '../utils/utmCapture'
 
 // ─── Qualification rules ─────────────────────────────────────────────
 const isDisqualified = (f) => {
@@ -130,6 +131,11 @@ export default function ApplyDriver() {
   const [result, setResult]   = useState(null) // 'qualified' | 'disqualified'
   const [reason, setReason]   = useState('')
 
+  // Capture UTM parameters on mount
+  useEffect(() => {
+    storeUTMParams()
+  }, [])
+
   const update = (name, val) => setForm(f => ({ ...f, [name]: val }))
 
   const currentStep = STEPS[step]
@@ -152,8 +158,12 @@ export default function ApplyDriver() {
     const tag = qualified ? 'qualified-driver' : 'not-qualified-driver'
     const stage = qualified ? 'New Lead' : 'Not Qualified'
 
+    // Get UTM parameters
+    const utmParams = getStoredUTMParams()
+
     const payload = {
       ...form,
+      ...utmParams,
       tags: [tag],
       pipelineStage: stage,
       qualified

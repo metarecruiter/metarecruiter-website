@@ -1,8 +1,9 @@
 import { CheckCircle2, Shield, Clock, Users, Phone, Mail } from 'lucide-react'
 import { C } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { submitToN8N } from '../utils/formSubmit'
+import { storeUTMParams, getStoredUTMParams } from '../utils/utmCapture'
 
 const HERO_IMG = '/hire-hero.png'
 
@@ -21,6 +22,12 @@ const TIERS = [
 function ContactForm() {
   const [form, setForm] = useState({ company: '', name: '', email: '', drivers: '', message: '' })
   const [sent, setSent] = useState(false)
+
+  // Capture UTM parameters on mount
+  useEffect(() => {
+    storeUTMParams()
+  }, [])
+
   const handle = e => {
     const { name, value, type, checked } = e.target
     setForm(f => ({ ...f, [name]: type === 'checkbox' ? checked : value }))
@@ -28,8 +35,12 @@ function ContactForm() {
   const submit = async e => {
     e.preventDefault()
 
+    // Get UTM parameters
+    const utmParams = getStoredUTMParams()
+
     const payload = {
       ...form,
+      ...utmParams,
       tags: ['hiring-interest', 'carrier'],
       pipelineStage: 'New Lead'
     }
