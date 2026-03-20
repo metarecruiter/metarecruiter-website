@@ -292,23 +292,9 @@ export default function ApplyDriver() {
             ))}
           </div>
 
-          {/* Consent + legal — last step only */}
+          {/* Legal links — last step only */}
           {step === STEPS.length - 1 && (
-            <div className="flex flex-col gap-4 mt-8" style={{ borderTop: '1px solid rgba(17,17,17,0.08)', paddingTop: '1.5rem' }}>
-              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer' }}>
-                <input type="checkbox" checked={form.consentMarketing} onChange={e => update('consentMarketing', e.target.checked)}
-                  style={{ marginTop: '2px', width: '16px', height: '16px', flexShrink: 0, accentColor: C.signal, cursor: 'pointer' }} />
-                <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
-                  I consent to receive marketing messages from MetaRecruiter LLC DBA Meta Recruiter at the phone number provided. Frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to Opt Out.
-                </span>
-              </label>
-              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer' }}>
-                <input type="checkbox" checked={form.consentNonMarketing} onChange={e => update('consentNonMarketing', e.target.checked)}
-                  style={{ marginTop: '2px', width: '16px', height: '16px', flexShrink: 0, accentColor: C.signal, cursor: 'pointer' }} />
-                <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
-                  I consent to receive non-marketing messages from MetaRecruiter LLC DBA Meta Recruiter about my application updates, appointment reminders etc. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
-                </span>
-              </label>
+            <div className="mt-8" style={{ borderTop: '1px solid rgba(17,17,17,0.08)', paddingTop: '1.5rem' }}>
               <p className="font-sans text-xs text-center" style={{ color: C.smoke }}>
                 <a href="/privacy-policy" style={{ color: C.signal, textDecoration: 'underline' }}>Privacy Policy</a>
                 {' | '}
