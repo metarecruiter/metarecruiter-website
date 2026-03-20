@@ -31,7 +31,7 @@ export default function TermsOfService() {
         <div style={{ maxWidth: '780px', margin: '0 auto' }}>
 
           {/* Intro */}
-          <div style={{ marginBottom: '2.5rem' }} className="font-sans" style2={{ color: C.smoke, lineHeight: 1.85, fontSize: '0.975rem' }}>
+          <div style={{ marginBottom: '2.5rem' }}>
             <p className="font-sans" style={{ color: C.smoke, lineHeight: 1.85, fontSize: '0.975rem', marginBottom: '0.75rem' }}>
               Welcome to MetaRecruiter.
             </p>
@@ -44,9 +44,8 @@ export default function TermsOfService() {
               By accessing or using our Site or services, you agree to these Terms. If you do not agree, please do not use our Site or services.
             </p>
             <p className="font-sans" style={{ color: C.smoke, lineHeight: 1.85, fontSize: '0.975rem' }}>
-              You should also review our{' '}
-              <a href="/privacy-policy" style={{ color: C.signal }}>Privacy Policy</a>,
-              which explains how we collect and use personal information.
+              Please also review our Privacy Policy:{' '}
+              <a href="https://metarecruiter.com/privacy" style={{ color: C.signal }}>https://metarecruiter.com/privacy</a>
             </p>
           </div>
 
@@ -57,123 +56,147 @@ export default function TermsOfService() {
               <Li>Connecting CDL Class A drivers with carrier employers</Li>
               <Li>Connecting owner-operators with carrier load opportunities</Li>
               <Li>Providing driver recruiting services to transportation carriers</Li>
-              <Li>Facilitating application, screening, and communication processes between drivers and carriers</Li>
+              <Li>Facilitating application, screening, and communication between drivers and carriers</Li>
             </ul>
             <p style={{ marginTop: '0.75rem' }}>MetaRecruiter acts as an intermediary between drivers/owner-operators and transportation carriers.</p>
           </Section>
 
           <Section title="2. Eligibility">
             <p>You must be at least 18 years of age to use our services.</p>
-            <p style={{ marginTop: '0.75rem' }}>By submitting an application or inquiry through our Site, you represent that:</p>
+            <p style={{ marginTop: '0.75rem' }}>By submitting an application or inquiry, you confirm:</p>
             <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <Li>You are legally eligible to work in the United States where applicable</Li>
-              <Li>All information you provide is accurate and truthful</Li>
-              <Li>You are submitting the information voluntarily</Li>
+              <Li>You are legally eligible to work in the United States (where applicable)</Li>
+              <Li>All information provided is accurate and truthful</Li>
+              <Li>You are submitting information voluntarily</Li>
             </ul>
           </Section>
 
           <Section title="3. Driver & Owner-Operator Applications">
-            <p>Submitting an application through MetaRecruiter does not guarantee job placement or employment.</p>
-            <p style={{ marginTop: '0.75rem' }}>MetaRecruiter provides recruiting services and connects drivers or owner-operators with carriers. Final hiring decisions are made solely by the carrier companies.</p>
-            <p style={{ marginTop: '0.75rem' }}>You agree that:</p>
+            <p>Submitting an application does not guarantee job placement or employment.</p>
+            <p style={{ marginTop: '0.75rem' }}>MetaRecruiter connects applicants with carriers, but:</p>
             <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <Li>All application information must be accurate and complete</Li>
-              <Li>MetaRecruiter may reject or remove applications that do not meet basic qualifications</Li>
-              <Li>Placement timelines vary depending on carrier availability and applicant qualifications</Li>
+              <Li>Hiring decisions are made solely by the carrier</Li>
+              <Li>Placement timelines vary</Li>
+              <Li>Applications may be rejected if requirements are not met</Li>
             </ul>
           </Section>
 
           <Section title="4. Carrier Recruiting Services">
-            <p>Transportation carriers using MetaRecruiter's recruiting services agree that:</p>
+            <p>Carriers agree that:</p>
             <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <Li>Service fees are governed by separate written agreements</Li>
-              <Li>MetaRecruiter provides candidate information in good faith</Li>
-              <Li>MetaRecruiter does not guarantee driver performance or conduct</Li>
-              <Li>Carriers remain responsible for all background checks, compliance, and onboarding in accordance with FMCSA regulations</Li>
+              <Li>Fees are governed by separate agreements</Li>
+              <Li>Candidate information is provided in good faith</Li>
+              <Li>MetaRecruiter does not guarantee driver performance</Li>
+              <Li>Carriers are responsible for compliance with FMCSA regulations</Li>
             </ul>
           </Section>
 
-          <Section title="5. SMS Communications & Consent">
-            <p>By submitting your phone number through forms on our website and checking the applicable consent checkbox, you agree to receive SMS messages from <strong>MetaRecruiter LLC DBA MetaRecruiter</strong>.</p>
-            <p style={{ marginTop: '0.75rem' }}>Messages may include:</p>
+          <Section title="5. SMS Messaging Program">
+            <p>By submitting your phone number and checking the consent checkbox, you agree to receive SMS messages from:</p>
+            <p style={{ marginTop: '0.5rem', fontWeight: 600, color: C.ink }}>MetaRecruiter LLC DBA MetaRecruiter</p>
+
+            <p style={{ marginTop: '1rem', fontWeight: 600, color: C.ink }}>Message Types</p>
+            <p style={{ marginTop: '0.4rem' }}>Messages may include:</p>
             <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <Li>Application confirmations</Li>
-              <Li>Driver recruiting updates</Li>
-              <Li>Follow-ups regarding driver or owner-operator opportunities</Li>
-              <Li>Appointment reminders or recruiting updates</Li>
+              <Li>Recruiting updates</Li>
+              <Li>Follow-ups regarding opportunities</Li>
+              <Li>Appointment reminders</Li>
               <Li>Service-related notifications</Li>
             </ul>
 
             <p style={{ marginTop: '1rem', fontWeight: 600, color: C.ink }}>Message Frequency</p>
-            <p style={{ marginTop: '0.4rem' }}>Message frequency varies but typically does not exceed:</p>
+            <p style={{ marginTop: '0.4rem' }}>Message frequency varies but typically includes:</p>
             <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <Li>2–5 messages per inquiry or application</Li>
-              <Li>Up to 4 informational or recruiting messages per month</Li>
+              <Li>2–5 messages per application or inquiry</Li>
+              <Li>Up to 4 recruiting or informational messages per month</Li>
             </ul>
 
-            <p style={{ marginTop: '1rem', fontWeight: 600, color: C.ink }}>Standard SMS Disclosures</p>
+            <p style={{ marginTop: '1rem', fontWeight: 600, color: C.ink }}>Standard Disclosures</p>
             <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <Li>Message and data rates may apply</Li>
-              <Li>You may opt out at any time by replying <strong>STOP</strong></Li>
-              <Li>For assistance, reply <strong>HELP</strong> or contact us at <a href="mailto:support@metarecruiter.com" style={{ color: C.signal }}>support@metarecruiter.com</a></Li>
+              <Li>Consent is not a condition of employment</Li>
             </ul>
-
-            <p style={{ marginTop: '1rem', fontWeight: 600, color: C.ink }}>Carrier Liability Disclaimer</p>
-            <p style={{ marginTop: '0.4rem' }}>Mobile carriers are not liable for delayed or undelivered messages.</p>
           </Section>
 
-          <Section title="6. Fees & Payments">
-            <p>Driver and owner-operator applications are free of charge.</p>
-            <p style={{ marginTop: '0.75rem' }}>Carrier recruiting services may be subject to fees outlined in a separate service agreement.</p>
-            <p style={{ marginTop: '0.75rem' }}>Unless otherwise stated in writing, all recruiting service fees are non-refundable.</p>
+          <Section title="6. Opt-Out Instructions">
+            <p>You may opt out of SMS communications at any time by replying:</p>
+            <p style={{ marginTop: '0.5rem', fontWeight: 600, color: C.ink }}>STOP</p>
+            <p style={{ marginTop: '0.5rem' }}>After you send "STOP", you will receive a confirmation message, and you will no longer receive SMS messages from MetaRecruiter.</p>
           </Section>
 
-          <Section title="7. Intellectual Property">
-            <p>All content on this Site, including text, graphics, logos, designs, and software, is the property of MetaRecruiter LLC and is protected by intellectual property laws.</p>
-            <p style={{ marginTop: '0.75rem' }}>You may not reproduce, distribute, or create derivative works from this content without written permission from MetaRecruiter.</p>
-          </Section>
-
-          <Section title="8. Disclaimer of Warranties">
-            <p>The Site and services are provided "as is" and "as available."</p>
-            <p style={{ marginTop: '0.75rem' }}>MetaRecruiter makes no warranties regarding:</p>
+          <Section title="7. Re-Opt In Instructions">
+            <p>To rejoin SMS communications after opting out, you must:</p>
             <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <Li>Website availability</Li>
-              <Li>Error-free operation</Li>
-              <Li>Employment or placement outcomes</Li>
+              <Li>Submit a new form on our website, or</Li>
+              <Li>Provide consent again through the original opt-in method</Li>
             </ul>
           </Section>
 
-          <Section title="9. Limitation of Liability">
-            <p>To the fullest extent permitted by law, MetaRecruiter LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from the use of our Site or services.</p>
-            <p style={{ marginTop: '0.75rem' }}>This includes but is not limited to:</p>
+          <Section title="8. Help Instructions">
+            <p>For assistance, reply:</p>
+            <p style={{ marginTop: '0.5rem', fontWeight: 600, color: C.ink }}>HELP</p>
+            <p style={{ marginTop: '0.5rem' }}>Or contact us at:</p>
+            <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <Li>Email: <a href="mailto:support@metarecruiter.com" style={{ color: C.signal }}>support@metarecruiter.com</a></Li>
+              <Li>Phone: <a href="tel:+13018610605" style={{ color: C.signal }}>+1 301-861-0605</a></Li>
+            </ul>
+          </Section>
+
+          <Section title="9. Carrier Liability Disclaimer">
+            <p>Mobile carriers are not liable for delayed or undelivered messages.</p>
+          </Section>
+
+          <Section title="10. Fees & Payments">
+            <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <Li>Driver applications are free</Li>
+              <Li>Carrier services may include fees per agreement</Li>
+              <Li>Fees are non-refundable unless stated otherwise</Li>
+            </ul>
+          </Section>
+
+          <Section title="11. Intellectual Property">
+            <p>All content on this Site is the property of MetaRecruiter LLC and may not be reproduced without permission.</p>
+          </Section>
+
+          <Section title="12. Disclaimer of Warranties">
+            <p>Services are provided "as is" without guarantees of:</p>
+            <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <Li>Website uptime</Li>
+              <Li>Error-free operation</Li>
+              <Li>Employment outcomes</Li>
+            </ul>
+          </Section>
+
+          <Section title="13. Limitation of Liability">
+            <p>MetaRecruiter is not liable for:</p>
             <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <Li>Loss of employment opportunity</Li>
-              <Li>Lost revenue or profits</Li>
+              <Li>Lost revenue</Li>
               <Li>Data loss</Li>
               <Li>Service interruptions</Li>
             </ul>
           </Section>
 
-          <Section title="10. Indemnification">
-            <p>You agree to indemnify and hold harmless MetaRecruiter LLC, its employees, officers, and agents from any claims, damages, liabilities, or expenses arising from:</p>
+          <Section title="14. Indemnification">
+            <p>You agree to indemnify MetaRecruiter against claims arising from:</p>
             <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <Li>Your use of the Site</Li>
-              <Li>Your violation of these Terms</Li>
-              <Li>Any false information submitted through our services</Li>
+              <Li>Use of the Site</Li>
+              <Li>Violations of these Terms</Li>
+              <Li>False information submitted</Li>
             </ul>
           </Section>
 
-          <Section title="11. Third-Party Services">
-            <p>MetaRecruiter may link to or interact with third-party services, including transportation carriers and job platforms.</p>
-            <p style={{ marginTop: '0.75rem' }}>We are not responsible for the policies, actions, or services of third-party organizations.</p>
+          <Section title="15. Third-Party Services">
+            <p>We are not responsible for third-party carriers, employers, or external services.</p>
           </Section>
 
-          <Section title="12. Governing Law">
-            <p>These Terms shall be governed by and interpreted under the laws of the State of Maryland.</p>
-            <p style={{ marginTop: '0.75rem' }}>Any disputes arising under these Terms shall be resolved in the courts located in Harford County, Maryland.</p>
+          <Section title="16. Governing Law">
+            <p>These Terms are governed by the laws of the State of Maryland.</p>
+            <p style={{ marginTop: '0.75rem' }}>All disputes will be handled in Harford County, Maryland courts.</p>
           </Section>
 
-          <Section title="13. Contact Information">
+          <Section title="17. Contact Information">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <p><strong>MetaRecruiter LLC DBA MetaRecruiter</strong></p>
               <p>1013 Beards Hill Rd<br />Aberdeen, MD 21001<br />United States</p>
