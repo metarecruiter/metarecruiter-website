@@ -20,7 +20,7 @@ const TIERS = [
 ]
 
 function ContactForm() {
-  const [form, setForm] = useState({ company: '', name: '', email: '', drivers: '', message: '' })
+  const [form, setForm] = useState({ company: '', firstName: '', lastName: '', email: '', drivers: '', message: '' })
   const [sent, setSent] = useState(false)
 
   // Capture UTM parameters on mount
@@ -52,24 +52,42 @@ function ContactForm() {
     if (!result.success && result.error === 'WEBHOOK_NOT_CONFIGURED') {
       const subject = encodeURIComponent('Carrier Inquiry — MetaRecruiter')
       const body = encodeURIComponent(
-        `Company: ${form.company}\nContact: ${form.name}\nEmail: ${form.email}\nDrivers Needed: ${form.drivers}\n\nMessage:\n${form.message}`
+        `Company: ${form.company}\nContact: ${form.firstName} ${form.lastName}\nEmail: ${form.email}\nDrivers Needed: ${form.drivers}\n\nMessage:\n${form.message}`
       )
       window.open(`mailto:support@metarecruiter.com?subject=${subject}&body=${body}`)
     }
 
     setSent(true)
-    setTimeout(() => setSent(false), 4000)
+    // Clear form on successful submission
+    setForm({ company: '', firstName: '', lastName: '', email: '', drivers: '', message: '' })
+    setTimeout(() => setSent(false), 5000)
   }
   const inputStyle = { width: '100%', fontFamily: '"Space Grotesk",sans-serif', fontSize: '0.95rem', padding: '0.85rem 1rem', borderRadius: '0.75rem', border: '1.5px solid rgba(17,17,17,0.15)', color: C.ink, background: '#fff', outline: 'none' }
+
+  // Show success message overlay
+  if (sent) {
+    return (
+      <div style={{ background: '#fff', borderRadius: '1rem', padding: '3rem 2rem', textAlign: 'center', border: '2px solid ' + C.signal }}>
+        <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: C.signal, margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <CheckCircle2 size={32} color="#fff" />
+        </div>
+        <h3 className="font-sans font-bold" style={{ fontSize: '1.5rem', color: C.ink, marginBottom: '0.75rem' }}>Request Received!</h3>
+        <p className="font-sans" style={{ color: C.smoke, lineHeight: 1.7, maxWidth: '400px', margin: '0 auto' }}>
+          Thank you for your interest. Our team will review your request and contact you within 24 hours to discuss your driver hiring needs.
+        </p>
+      </div>
+    )
+  }
+
   return (
     <form onSubmit={submit} className="flex flex-col gap-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Company Name <span style={{ color: C.signal }}>*</span></label><input name="company" required value={form.company} onChange={handle} style={inputStyle} /></div>
-        <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Your Name <span style={{ color: C.signal }}>*</span></label><input name="name" required value={form.name} onChange={handle} style={inputStyle} /></div>
+        <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>First Name <span style={{ color: C.signal }}>*</span></label><input name="firstName" required value={form.firstName} onChange={handle} style={inputStyle} /></div>
       </div>
-      <div>
-        <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Email <span style={{ color: C.signal }}>*</span></label>
-        <input name="email" type="email" required value={form.email} onChange={handle} style={inputStyle} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Last Name <span style={{ color: C.signal }}>*</span></label><input name="lastName" required value={form.lastName} onChange={handle} style={inputStyle} /></div>
+        <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Email <span style={{ color: C.signal }}>*</span></label><input name="email" type="email" required value={form.email} onChange={handle} style={inputStyle} /></div>
       </div>
       <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>How many drivers do you need?</label>
         <select name="drivers" value={form.drivers} onChange={handle} style={{ ...inputStyle, appearance: 'none' }}>
