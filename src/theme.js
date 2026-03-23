@@ -11,7 +11,7 @@ export const C = {
 export const HERO_IMG  = '/hero-truck.jpg'
 export const PHILO_IMG = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80'
 export const PROTO_IMGS = [
-  'https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=1200&q=80',
+  '/profile-assess.jpg',
   'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1200&q=80',
   'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=80',
 ]

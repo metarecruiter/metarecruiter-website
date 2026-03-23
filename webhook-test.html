@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook Test</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px 5px; }
+        #result { margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 5px; white-space: pre-wrap; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>N8N Webhook Test</h1>
+    <p>This will test the webhook connection to N8N.</p>
+
+    <div>
+        <button onclick="testWebhook()">Test Contact Form</button>
+        <button onclick="testDriverForm()">Test Driver Form</button>
+        <button onclick="testOwnerOpForm()">Test Owner Op Form</button>
+        <button onclick="testHireDriversForm()">Test Hire Drivers Form</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const WEBHOOK_URL = 'https://metarecruiter.app.n8n.cloud/webhook/metarecruiter-forms';
+        const WEBHOOK_SECRET = ''; // Add your secret if you have one
+
+        async function testWebhook(formType = 'contact', payload = {}) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            resultDiv.className = '';
+
+            const testData = {
+                formType: formType,
+                timestamp: new Date().toISOString(),
+                source: 'metarecruiter-website',
+                ...payload
+            };
+
+            console.log('Sending to webhook:', WEBHOOK_URL);
+            console.log('Payload:', testData);
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(WEBHOOK_SECRET && { 'X-Webhook-Secret': WEBHOOK_SECRET })
+                    },
+                    body: JSON.stringify(testData)
+                });
+
+                console.log('Response status:', response.status);
+                const responseText = await response.text();
+                console.log('Response body:', responseText);
+
+                if (response.ok) {
+                    resultDiv.className = 'success';
+                    resultDiv.innerHTML = `✅ SUCCESS!\n\nStatus: ${response.status}\nResponse: ${responseText}`;
+                } else {
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = `❌ FAILED\n\nStatus: ${response.status}\nResponse: ${responseText}`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = `❌ ERROR\n\n${error.message}\n\nCheck console for details.`;
+            }
+        }
+
+        function testContactForm() {
+            testWebhook('contact', {
+                firstName: 'Test',
+                lastName: 'User',
+                email: 'test@example.com',
+                phone: '555-1234',
+                tags: ['general-contact'],
+                pipelineStage: 'New Lead'
+            });
+        }
+
+        function testDriverForm() {
+            testWebhook('apply-driver', {
+                firstName: 'John',
+                lastName: 'Driver',
+                email: 'driver@example.com',
+                phone: '555-5678',
+                hasCdl: 'yes',
+                otrExp: '3-5',
+                qualified: true,
+                tags: ['qualified-driver'],
+                pipelineStage: 'New Lead'
+            });
+        }
+
+        function testOwnerOpForm() {
+            testWebhook('owner-operator', {
+                firstName: 'Jane',
+                lastName: 'Operator',
+                email: 'operator@example.com',
+                phone: '555-9012',
+                hasCdl: 'yes',
+                ownsTruck: 'yes',
+                tags: ['owner-operator', 'qualified'],
+                pipelineStage: 'New Lead'
+            });
+        }
+
+        function testHireDriversForm() {
+            testWebhook('hire-drivers', {
+                company: 'Test Trucking Co',
+                name: 'Bob Carrier',
+                email: 'carrier@example.com',
+                phone: '555-3456',
+                drivers: '4-10',
+                tags: ['hiring-interest', 'carrier'],
+                pipelineStage: 'New Lead'
+            });
+        }
+    </script>
+</body>
+</html>
