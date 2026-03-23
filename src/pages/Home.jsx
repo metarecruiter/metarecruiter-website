@@ -311,7 +311,7 @@ function Protocol() {
                 </div>
               </div>
               <div className="hidden md:block" style={{ position: 'relative', overflow: 'hidden' }}>
-                <img src={step.img} alt={step.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: i === 0 ? 'left center' : 'center', filter: i===1?'grayscale(30%) brightness(0.7)':'grayscale(15%)' }} />
+                <img src={step.img} alt={step.title} style={{ width: '100%', height: '100%', objectFit: i === 0 ? 'contain' : 'cover', objectPosition: 'center', filter: i===1?'grayscale(30%) brightness(0.7)':'grayscale(15%)' }} />
                 <div style={{ position: 'absolute', inset: 0, background: i===1?'linear-gradient(to right,rgba(17,17,17,0.6) 0%,transparent 60%)':'linear-gradient(to right,rgba(245,243,238,0.4) 0%,transparent 60%)' }} />
               </div>
             </div>
