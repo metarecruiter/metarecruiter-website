@@ -6,6 +6,36 @@
  */
 
 /**
+ * Capitalize the first letter of single-word string values in form data.
+ * Ensures values like "yes"/"no" become "Yes"/"No" for GoHighLevel compatibility.
+ * Skips emails, dates, multi-word strings, URLs, and non-string values.
+ */
+function capitalizeFormValues(data) {
+  const result = {}
+  for (const [key, value] of Object.entries(data)) {
+    if (typeof value === 'string') {
+      const trimmed = value.trim()
+      // Skip emails, dates (YYYY-MM-DD), URLs, and empty strings
+      if (trimmed.includes('@') || trimmed.includes('/') || /^\d{4}-\d{2}-\d{2}$/.test(trimmed) || trimmed === '') {
+        result[key] = value
+      } else if (!trimmed.includes(' ') || trimmed.split(' ').length <= 3) {
+        // Capitalize first letter of each word for single-word or short values
+        result[key] = trimmed.replace(/\b\w/g, c => c.toUpperCase())
+      } else {
+        result[key] = value
+      }
+    } else if (Array.isArray(value)) {
+      result[key] = value.map(v =>
+        typeof v === 'string' ? v.replace(/\b\w/g, c => c.toUpperCase()) : v
+      )
+    } else {
+      result[key] = value
+    }
+  }
+  return result
+}
+
+/**
  * Submit form data to N8N webhook
  * @param {string} formType - The type of form being submitted (apply-driver, owner-operator, hire-drivers, contact)
  * @param {object} formData - The form data to submit
@@ -32,7 +62,7 @@ export async function submitToN8N(formType, formData) {
         formType,
         timestamp: new Date().toISOString(),
         source: 'metarecruiter-website',
-        ...formData
+        ...capitalizeFormValues(formData)
       })
     })
 
