@@ -27,6 +27,7 @@ const STEPS = [
       { name: 'firstName',  label: 'First Name',    type: 'text',   required: true },
       { name: 'lastName',   label: 'Last Name',     type: 'text',   required: true },
       { name: 'email',      label: 'Email Address', type: 'email',  required: true },
+      { name: 'phone',      label: 'Phone Number',  type: 'tel',    required: true },
     ],
   },
   {
@@ -66,16 +67,19 @@ const STEPS = [
       { name: 'routeType', label: 'Preferred route type', type: 'radio', options: [{ value: 'otr', label: 'OTR (Over-the-Road)' }, { value: 'regional', label: 'Regional' }, { value: 'local', label: 'Local' }, { value: 'any', label: 'Open to any' }], required: true },
       { name: 'startDate', label: 'Earliest available start date', type: 'date', required: true },
       { name: 'notes',     label: 'Anything else you\'d like us to know? (optional)', type: 'textarea', required: false },
+      { name: 'smsConsent', label: 'I consent to receive text messages from MetaRecruiter regarding job opportunities and application status. Message and data rates may apply.', type: 'checkbox', required: true },
+      { name: 'termsAgree', label: 'I agree to the Terms of Service and Privacy Policy.', type: 'checkbox', required: true },
     ],
   },
 ]
 
 const EMPTY = {
-  firstName: '', lastName: '', email: '',
+  firstName: '', lastName: '', email: '', phone: '',
   hasCdl: '', otrExp: '',
   accidents: '', violations: '',
   sap: '', drugTest: '', workAuth: '', english: '',
   routeType: '', startDate: '', notes: '',
+  smsConsent: false, termsAgree: false,
 }
 
 function RadioGroup({ field, value, onChange }) {
@@ -115,6 +119,20 @@ function FieldRenderer({ field, value, onChange }) {
     transition: 'border-color 0.2s',
   }
   if (field.type === 'radio')    return <RadioGroup field={field} value={value} onChange={onChange} />
+  if (field.type === 'checkbox') {
+    return (
+      <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', padding: '0.5rem 0' }}>
+        <input
+          type="checkbox"
+          name={field.name}
+          checked={value}
+          onChange={e => onChange(field.name, e.target.checked)}
+          style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+        />
+        <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>{field.label}</span>
+      </label>
+    )
+  }
   if (field.type === 'textarea') return <textarea name={field.name} value={value} onChange={e => onChange(field.name, e.target.value)} rows={4} style={{ ...inputBase, resize: 'vertical' }} placeholder="Optional..." />
   if (field.type === 'select')
     return (
@@ -291,10 +309,12 @@ export default function ApplyDriver() {
           <div className="flex flex-col gap-6">
             {currentStep.fields.map(field => (
               <div key={field.name}>
-                <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.5rem', lineHeight: 1.4 }}>
-                  {field.label}
-                  {field.required && <span style={{ color: C.signal }}> *</span>}
-                </label>
+                {field.type !== 'checkbox' && (
+                  <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.5rem', lineHeight: 1.4 }}>
+                    {field.label}
+                    {field.required && <span style={{ color: C.signal }}> *</span>}
+                  </label>
+                )}
                 <FieldRenderer field={field} value={form[field.name]} onChange={update} />
               </div>
             ))}

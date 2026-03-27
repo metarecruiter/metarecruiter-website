@@ -79,7 +79,7 @@ function PlanModal({ isOpen, onClose, planName }) {
 }
 
 function ContactForm() {
-  const [form, setForm] = useState({ company: '', firstName: '', lastName: '', email: '', drivers: '', message: '' })
+  const [form, setForm] = useState({ company: '', firstName: '', lastName: '', email: '', phone: '', drivers: '', message: '', smsConsent: false, termsAgree: false })
   const [sent, setSent] = useState(false)
 
   // Capture UTM parameters on mount
@@ -118,7 +118,7 @@ function ContactForm() {
 
     setSent(true)
     // Clear form on successful submission
-    setForm({ company: '', firstName: '', lastName: '', email: '', drivers: '', message: '' })
+    setForm({ company: '', firstName: '', lastName: '', email: '', phone: '', drivers: '', message: '', smsConsent: false, termsAgree: false })
     setTimeout(() => setSent(false), 5000)
   }
   const inputStyle = { width: '100%', fontFamily: '"Space Grotesk",sans-serif', fontSize: '0.95rem', padding: '0.85rem 1rem', borderRadius: '0.75rem', border: '1.5px solid rgba(17,17,17,0.15)', color: C.ink, background: '#fff', outline: 'none' }
@@ -148,6 +148,9 @@ function ContactForm() {
         <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Last Name <span style={{ color: C.signal }}>*</span></label><input name="lastName" required value={form.lastName} onChange={handle} style={inputStyle} /></div>
         <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Email <span style={{ color: C.signal }}>*</span></label><input name="email" type="email" required value={form.email} onChange={handle} style={inputStyle} /></div>
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Phone Number <span style={{ color: C.signal }}>*</span></label><input name="phone" type="tel" required value={form.phone} onChange={handle} style={inputStyle} /></div>
+      </div>
       <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>How many drivers do you need?</label>
         <select name="drivers" value={form.drivers} onChange={handle} style={{ ...inputStyle, appearance: 'none' }}>
           <option value="">Select...</option>
@@ -155,6 +158,38 @@ function ContactForm() {
         </select>
       </div>
       <div><label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Tell us about your needs</label><textarea name="message" rows={4} value={form.message} onChange={handle} style={{ ...inputStyle, resize: 'vertical' }} placeholder="Route types, schedule, compensation, fleet size..." /></div>
+
+      <div>
+        <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', padding: '0.5rem 0' }}>
+          <input
+            type="checkbox"
+            name="smsConsent"
+            checked={form.smsConsent}
+            onChange={handle}
+            required
+            style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+          />
+          <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
+            I consent to receive text messages from MetaRecruiter regarding driver hiring services and updates. Message and data rates may apply. <span style={{ color: C.signal }}>*</span>
+          </span>
+        </label>
+      </div>
+
+      <div>
+        <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', padding: '0.5rem 0' }}>
+          <input
+            type="checkbox"
+            name="termsAgree"
+            checked={form.termsAgree}
+            onChange={handle}
+            required
+            style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+          />
+          <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
+            I agree to the Terms of Service and Privacy Policy. <span style={{ color: C.signal }}>*</span>
+          </span>
+        </label>
+      </div>
 
       {/* Legal links */}
       <div style={{ borderTop: '1px solid rgba(17,17,17,0.08)', paddingTop: '1rem' }}>

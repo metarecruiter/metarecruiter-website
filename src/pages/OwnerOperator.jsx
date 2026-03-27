@@ -64,11 +64,12 @@ function OwnerOpForm() {
   const [result, setResult] = useState(null)
   const [disqualReason, setDisqualReason] = useState('')
   const [form, setForm]   = useState({
-    firstName: '', lastName: '', email: '',
+    firstName: '', lastName: '', email: '', phone: '',
     hasCdl: '', ownsTruck: '', truckMake: '', truckYear: '',
     hasFmcsa: '', mcNumber: '', dotNumber: '',
     yearsExp: '', routes: '', startDate: '',
     drugTest: '', workAuth: '',
+    smsConsent: false, termsAgree: false,
   })
 
   // Capture UTM parameters on mount
@@ -102,6 +103,10 @@ function OwnerOpForm() {
             <div>
               <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Email <span style={{ color: C.signal }}>*</span></label>
               <input name="email" type="email" required value={form.email} onChange={handle} style={inputStyle} />
+            </div>
+            <div>
+              <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Phone Number <span style={{ color: C.signal }}>*</span></label>
+              <input name="phone" type="tel" required value={form.phone} onChange={handle} style={inputStyle} />
             </div>
           </div>
         </div>
@@ -198,7 +203,7 @@ function OwnerOpForm() {
     {
       title: 'Final Compliance',
       sub: 'Almost done — just a few quick questions.',
-      isValid: () => form.drugTest && form.workAuth,
+      isValid: () => form.drugTest && form.workAuth && form.smsConsent && form.termsAgree,
       content: (
         <div className="flex flex-col gap-6">
           <div>
@@ -208,6 +213,36 @@ function OwnerOpForm() {
           <div>
             <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.75rem' }}>Are you authorized to work in the United States? <span style={{ color: C.signal }}>*</span></label>
             <RadioGroup name="workAuth" options={[{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }]} form={form} handle={handle} />
+          </div>
+          <div>
+            <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', padding: '0.5rem 0' }}>
+              <input
+                type="checkbox"
+                name="smsConsent"
+                checked={form.smsConsent}
+                onChange={handle}
+                required
+                style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+              />
+              <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
+                I consent to receive text messages from MetaRecruiter regarding job opportunities and application status. Message and data rates may apply. <span style={{ color: C.signal }}>*</span>
+              </span>
+            </label>
+          </div>
+          <div>
+            <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', padding: '0.5rem 0' }}>
+              <input
+                type="checkbox"
+                name="termsAgree"
+                checked={form.termsAgree}
+                onChange={handle}
+                required
+                style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+              />
+              <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
+                I agree to the Terms of Service and Privacy Policy. <span style={{ color: C.signal }}>*</span>
+              </span>
+            </label>
           </div>
           <div style={{ borderTop: '1px solid rgba(17,17,17,0.08)', paddingTop: '1.25rem' }}>
             <p className="font-sans text-xs text-center" style={{ color: C.smoke }}>
