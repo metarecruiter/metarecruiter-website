@@ -47,7 +47,7 @@ function Hero() {
           <MagneticBtn className="w-full sm:w-auto" href="/owner-operators" bg="rgba(255,255,255,0.1)" hoverBg={C.signal} color="#fff" hoverColor="#fff" style={{ padding: '1rem 2.2rem', borderRadius: '9999px', fontSize: '1rem', border: '1px solid rgba(255,255,255,0.3)' }}>
             Owner Operators
           </MagneticBtn>
-          <MagneticBtn className="w-full sm:w-auto" href="/hire-drivers" bg={C.ink} hoverBg={C.signal} color="#fff" hoverColor="#fff" style={{ padding: '1rem 2.2rem', borderRadius: '9999px', fontSize: '1rem', border: '1px solid rgba(255,255,255,0.15)' }}>
+          <MagneticBtn className="w-full sm:w-auto" href="/hire-drivers#get-drivers" bg={C.ink} hoverBg={C.signal} color="#fff" hoverColor="#fff" style={{ padding: '1rem 2.2rem', borderRadius: '9999px', fontSize: '1rem', border: '1px solid rgba(255,255,255,0.15)' }}>
             Hire Drivers <ArrowRight size={15} />
           </MagneticBtn>
         </div>

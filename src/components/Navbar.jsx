@@ -6,7 +6,7 @@ import MagneticBtn from './MagneticBtn'
 
 const NAV_LINKS = [
   { label: 'Apply as Driver', to: '/apply' },
-  { label: 'Hire Drivers',    to: '/hire-drivers' },
+  { label: 'Hire Drivers',    to: '/hire-drivers#get-drivers' },
   { label: 'Owner Operators', to: '/owner-operators' },
   { label: 'About',           to: '/about' },
   { label: 'Contact',         to: '/contact' },
