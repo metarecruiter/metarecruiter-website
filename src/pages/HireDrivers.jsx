@@ -1,4 +1,4 @@
-import { CheckCircle2, Shield, Clock, Users, Phone, Mail } from 'lucide-react'
+import { CheckCircle2, Shield, Clock, Users, Phone, Mail, X } from 'lucide-react'
 import { C } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
 import { useState, useEffect } from 'react'
@@ -18,6 +18,65 @@ const TIERS = [
   { name: 'Professional Recruiting', sub: 'Full-service placement', price: '$1,500', period: '/mo', features: ['We recruit & pre-screen drivers', 'Only qualified candidates sent', 'Full DOT compliance checks', 'Dedicated account manager', 'Unlimited placements', 'Post-hire follow-up'], pop: true },
   { name: 'Enterprise',              sub: 'High-volume fleets',     price: 'Custom', period: '',    features: ['Volume driver contracts', 'Custom driver profiles', 'Real-time reporting dashboard', 'SLA guarantees', '24/7 priority support'], pop: false },
 ]
+
+function PlanModal({ isOpen, onClose, planName }) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+      // Load the form embed script
+      const script = document.createElement('script')
+      script.src = 'https://link.msgsndr.com/js/form_embed.js'
+      script.async = true
+      document.body.appendChild(script)
+      return () => {
+        document.body.style.overflow = 'unset'
+        document.body.removeChild(script)
+      }
+    }
+  }, [isOpen])
+
+  if (!isOpen) return null
+
+  const formIds = {
+    'Starter': 'gWp5LPDdKKW5orqquPqh',
+    'Professional Recruiting': 'E3zPEQH4n9rU7KfaAdn0'
+  }
+
+  const formId = formIds[planName]
+  if (!formId) return null
+
+  return (
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+      <div onClick={e => e.stopPropagation()} style={{ position: 'relative', background: '#fff', borderRadius: '1rem', maxWidth: '800px', width: '100%', maxHeight: '90vh', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(17,17,17,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <h3 className="font-sans font-bold text-xl" style={{ color: C.ink }}>{planName} Plan</h3>
+          <button onClick={onClose} style={{ width: '40px', height: '40px', borderRadius: '50%', border: 'none', background: 'rgba(17,17,17,0.05)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>
+            <X size={20} style={{ color: C.ink }} />
+          </button>
+        </div>
+        <div style={{ height: 'calc(90vh - 100px)', overflow: 'auto' }}>
+          <iframe
+            src={`https://api.leadconnectorhq.com/widget/form/${formId}`}
+            style={{ width: '100%', height: '650px', border: 'none', borderRadius: '3px' }}
+            id={`inline-${formId}`}
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name={`Meta Recruiter ${planName} Plan Form`}
+            data-height="650"
+            data-layout-iframe-id={`inline-${formId}`}
+            data-form-id={formId}
+            title={`Meta Recruiter ${planName} Plan Form`}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function ContactForm() {
   const [form, setForm] = useState({ company: '', firstName: '', lastName: '', email: '', drivers: '', message: '' })
@@ -114,8 +173,26 @@ function ContactForm() {
 }
 
 export default function HireDrivers() {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState(null)
+
+  const handlePlanClick = (tierName) => {
+    if (tierName === 'Starter' || tierName === 'Professional Recruiting') {
+      setSelectedPlan(tierName)
+      setModalOpen(true)
+    } else if (tierName === 'Enterprise') {
+      // Scroll to the contact form
+      const element = document.querySelector('#get-drivers')
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+
   return (
-    <div style={{ background: C.offwhite }}>
+    <>
+      <PlanModal isOpen={modalOpen} onClose={() => setModalOpen(false)} planName={selectedPlan} />
+      <div style={{ background: C.offwhite }}>
       {/* Hero */}
       <div style={{ position: 'relative', paddingTop: '9rem', paddingBottom: '6rem', paddingLeft: 'clamp(1.5rem,6vw,7rem)', paddingRight: 'clamp(1.5rem,6vw,7rem)', overflow: 'hidden' }}>
         <img src={HERO_IMG} alt="Fleet" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 60%', filter: 'brightness(0.45)' }} />
@@ -181,9 +258,9 @@ export default function HireDrivers() {
                     </li>
                   ))}
                 </ul>
-                <MagneticBtn href="#get-drivers" bg={tier.pop?'#fff':'rgba(255,255,255,0.1)'} hoverBg={tier.pop?C.ink:'rgba(255,255,255,0.2)'} color={tier.pop?C.signal:'#fff'} hoverColor={tier.pop?'#fff':'#fff'} style={{ borderRadius: '9999px', padding: '0.85rem', width: '100%', fontSize: '0.875rem' }}>
+                <button onClick={() => handlePlanClick(tier.name)} style={{ width: '100%', padding: '0.85rem', borderRadius: '9999px', fontSize: '0.875rem', fontFamily: '"Space Grotesk",sans-serif', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.3s', background: tier.pop ? '#fff' : 'rgba(255,255,255,0.1)', color: tier.pop ? C.signal : '#fff' }}>
                   Get Started
-                </MagneticBtn>
+                </button>
               </div>
             ))}
           </div>
@@ -222,5 +299,6 @@ export default function HireDrivers() {
         </div>
       </section>
     </div>
+    </>
   )
 }
