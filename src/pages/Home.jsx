@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Truck, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { Truck, ArrowRight, CheckCircle2, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { C, HERO_IMG, PHILO_IMG, PROTO_IMGS } from '../theme'
 import MagneticBtn from '../components/MagneticBtn'
@@ -324,6 +324,68 @@ function Protocol() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════════════════════════════
+function PlanModal({ isOpen, onClose, planName }) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+      // Load the form embed script
+      const script = document.createElement('script')
+      script.src = 'https://link.msgsndr.com/js/form_embed.js'
+      script.async = true
+      document.body.appendChild(script)
+      return () => {
+        document.body.style.overflow = 'unset'
+        document.body.removeChild(script)
+      }
+    }
+  }, [isOpen])
+
+  if (!isOpen) return null
+
+  const formIds = {
+    'Starter': 'gWp5LPDdKKW5orqquPqh',
+    'Professional Recruiting': 'E3zPEQH4n9rU7KfaAdn0'
+  }
+
+  const formId = formIds[planName]
+  if (!formId) return null
+
+  return (
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+      <div onClick={e => e.stopPropagation()} style={{ position: 'relative', background: '#fff', borderRadius: '1rem', maxWidth: '800px', width: '100%', maxHeight: '90vh', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(17,17,17,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <h3 className="font-sans font-bold text-xl" style={{ color: C.ink }}>{planName} Plan</h3>
+          <button onClick={onClose} style={{ width: '40px', height: '40px', borderRadius: '50%', border: 'none', background: 'rgba(17,17,17,0.05)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>
+            <X size={20} style={{ color: C.ink }} />
+          </button>
+        </div>
+        <div style={{ height: 'calc(90vh - 100px)', overflow: 'auto' }}>
+          <iframe
+            src={`https://api.leadconnectorhq.com/widget/form/${formId}`}
+            style={{ width: '100%', height: '650px', border: 'none', borderRadius: '3px' }}
+            id={`inline-${formId}`}
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name={`Meta Recruiter ${planName} Plan Form`}
+            data-height="650"
+            data-layout-iframe-id={`inline-${formId}`}
+            data-form-id={formId}
+            title={`Meta Recruiter ${planName} Plan Form`}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════════════
 //  PRICING (updated with real prices)
 // ═══════════════════════════════════════════════════════════════════════
 const TIERS = [
@@ -334,19 +396,31 @@ const TIERS = [
 
 function Pricing() {
   const ref = useRef(null)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState(null)
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.tier-card', { y: 50, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12, scrollTrigger: { trigger: '.tier-card', start: 'top 80%' } })
     }, ref)
     return () => ctx.revert()
   }, [])
+
+  const handlePlanClick = (tierName) => {
+    if (tierName === 'Starter' || tierName === 'Professional Recruiting') {
+      setSelectedPlan(tierName)
+      setModalOpen(true)
+    }
+  }
   return (
-    <section ref={ref} className="section-pad" style={{ background: C.offwhite }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-        <span className="font-mono-data text-xs tracking-widest uppercase" style={{ color: C.signal }}>Carrier Pricing</span>
-        <h2 className="font-sans font-bold mt-3 mb-12" style={{ fontSize: 'clamp(2.2rem,4.5vw,3.8rem)', letterSpacing: '-0.03em', color: C.ink, lineHeight: 1.1 }}>
-          Find your plan.<br /><span className="font-serif-drama" style={{ color: C.signal }}>Scale with confidence.</span>
-        </h2>
+    <>
+      <PlanModal isOpen={modalOpen} onClose={() => setModalOpen(false)} planName={selectedPlan} />
+      <section ref={ref} className="section-pad" style={{ background: C.offwhite }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <span className="font-mono-data text-xs tracking-widest uppercase" style={{ color: C.signal }}>Carrier Pricing</span>
+          <h2 className="font-sans font-bold mt-3 mb-12" style={{ fontSize: 'clamp(2.2rem,4.5vw,3.8rem)', letterSpacing: '-0.03em', color: C.ink, lineHeight: 1.1 }}>
+            Find your plan.<br /><span className="font-serif-drama" style={{ color: C.signal }}>Scale with confidence.</span>
+          </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
           {TIERS.map(tier => (
             <div key={tier.name} className="tier-card" style={{ background: tier.pop?C.signal:C.offwhite, border: `1px solid ${tier.pop?C.signal:'rgba(17,17,17,0.12)'}`, borderRadius: '2rem', padding: '2.5rem', transform: tier.pop?'scale(1.04)':'scale(1)', boxShadow: tier.pop?`0 20px 60px ${C.signal}40`:'0 4px 24px rgba(0,0,0,0.05)' }}>
@@ -364,9 +438,15 @@ function Pricing() {
                   </li>
                 ))}
               </ul>
-              <MagneticBtn href="/hire-drivers" bg={tier.pop?'#fff':C.signal} hoverBg={tier.pop?C.ink:C.ash} color={tier.pop?C.signal:'#fff'} hoverColor="#fff" style={{ borderRadius: '9999px', padding: '0.85rem', width: '100%', fontSize: '0.875rem' }}>
-                Get Started
-              </MagneticBtn>
+              {tier.name === 'Enterprise' ? (
+                <MagneticBtn href="/hire-drivers#get-drivers" bg={C.signal} hoverBg={C.ash} color="#fff" hoverColor="#fff" style={{ borderRadius: '9999px', padding: '0.85rem', width: '100%', fontSize: '0.875rem' }}>
+                  Get Started
+                </MagneticBtn>
+              ) : (
+                <button onClick={() => handlePlanClick(tier.name)} style={{ width: '100%', padding: '0.85rem', borderRadius: '9999px', fontSize: '0.875rem', fontFamily: '"Space Grotesk",sans-serif', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.3s', background: tier.pop ? '#fff' : C.signal, color: tier.pop ? C.signal : '#fff' }}>
+                  Get Started
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -376,6 +456,7 @@ function Pricing() {
         </p>
       </div>
     </section>
+    </>
   )
 }
 
