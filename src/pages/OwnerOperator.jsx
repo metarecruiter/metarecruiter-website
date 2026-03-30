@@ -180,7 +180,7 @@ function OwnerOpForm() {
             <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.4rem' }}>Years as an owner-operator <span style={{ color: C.signal }}>*</span></label>
             <select name="yearsExp" value={form.yearsExp} onChange={handle} style={{ ...inputStyle, appearance: 'none' }}>
               <option value="">Select...</option>
-              {['Less than 1 year', '1–2 years', '3–5 years', '5–10 years', '10+ years'].map(v => (
+              {['Less than 1 year', '1–3 Years', '3–5 Years', '5-10 Years', '10+ Years'].map(v => (
                 <option key={v} value={v}>{v}</option>
               ))}
             </select>
