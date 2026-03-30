@@ -1,16 +1,18 @@
 import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import Navbar  from './components/Navbar'
 import Footer  from './components/Footer'
-import Home          from './pages/Home'
-import ApplyDriver   from './pages/ApplyDriver'
-import HireDrivers   from './pages/HireDrivers'
-import OwnerOperator from './pages/OwnerOperator'
-import About         from './pages/About'
-import Contact       from './pages/Contact'
-import PrivacyPolicy from './pages/PrivacyPolicy'
-import TermsOfService from './pages/TermsOfService'
+import Home    from './pages/Home'
 import './index.css'
+
+// Lazy load non-critical pages for faster initial load
+const ApplyDriver   = lazy(() => import('./pages/ApplyDriver'))
+const HireDrivers   = lazy(() => import('./pages/HireDrivers'))
+const OwnerOperator = lazy(() => import('./pages/OwnerOperator'))
+const About         = lazy(() => import('./pages/About'))
+const Contact       = lazy(() => import('./pages/Contact'))
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
+const TermsOfService = lazy(() => import('./pages/TermsOfService'))
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -36,7 +38,9 @@ function Layout() {
     <>
       <Navbar />
       <main>
-        <Outlet />
+        <Suspense fallback={<div style={{ minHeight: '100dvh' }} />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </>

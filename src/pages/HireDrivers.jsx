@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { submitToN8N } from '../utils/formSubmit'
 import { storeUTMParams, getStoredUTMParams } from '../utils/utmCapture'
 
-const HERO_IMG = '/hire-hero.png'
+const HERO_IMG = '/hire-hero.jpg'
 
 const FEATURES = [
   { icon: <Shield size={22} />, title: 'Pre-Screened Drivers', desc: 'Every candidate is verified — CDL Class A confirmed, DOT compliance checked, driving history reviewed before you see their profile.' },
@@ -167,7 +167,7 @@ function ContactForm() {
             checked={form.smsConsent}
             onChange={handle}
             required
-            style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+            style={{ marginTop: '0.15rem', width: '24px', height: '24px', minWidth: '24px', cursor: 'pointer', accentColor: C.signal }}
           />
           <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
             I consent to receive text messages from MetaRecruiter regarding driver hiring services and updates. Message and data rates may apply. <span style={{ color: C.signal }}>*</span>
@@ -183,7 +183,7 @@ function ContactForm() {
             checked={form.termsAgree}
             onChange={handle}
             required
-            style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+            style={{ marginTop: '0.15rem', width: '24px', height: '24px', minWidth: '24px', cursor: 'pointer', accentColor: C.signal }}
           />
           <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
             I agree to the Terms of Service and Privacy Policy. <span style={{ color: C.signal }}>*</span>
@@ -230,7 +230,7 @@ export default function HireDrivers() {
       <div style={{ background: C.offwhite }}>
       {/* Hero */}
       <div style={{ position: 'relative', paddingTop: '9rem', paddingBottom: '6rem', paddingLeft: 'clamp(1.5rem,6vw,7rem)', paddingRight: 'clamp(1.5rem,6vw,7rem)', overflow: 'hidden' }}>
-        <img src={HERO_IMG} alt="Fleet" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 60%', filter: 'brightness(0.45)' }} />
+        <img src={HERO_IMG} alt="Fleet" loading="eager" fetchPriority="high" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 60%', filter: 'brightness(0.45)' }} />
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '760px' }}>
           <span className="font-mono-data text-xs tracking-widest uppercase" style={{ color: C.signal }}>For Carriers</span>
           <h1 className="font-sans font-bold mt-3" style={{ fontSize: 'clamp(2.5rem,6vw,5rem)', color: '#fff', lineHeight: 1.05, letterSpacing: '-0.03em' }}>

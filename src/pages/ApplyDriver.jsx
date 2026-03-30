@@ -67,8 +67,8 @@ const STEPS = [
       { name: 'routeType', label: 'Preferred route type', type: 'radio', options: [{ value: 'otr', label: 'OTR (Over-the-Road)' }, { value: 'regional', label: 'Regional' }, { value: 'local', label: 'Local' }, { value: 'any', label: 'Open to any' }], required: true },
       { name: 'startDate', label: 'Earliest available start date', type: 'date', required: true },
       { name: 'notes',     label: 'Anything else you\'d like us to know? (optional)', type: 'textarea', required: false },
-      { name: 'smsConsent', label: 'I consent to receive text messages from MetaRecruiter regarding job opportunities and application status. Message and data rates may apply.', type: 'checkbox', required: true },
-      { name: 'termsAgree', label: 'I agree to the Terms of Service and Privacy Policy.', type: 'checkbox', required: true },
+      { name: 'smsConsent', label: 'I consent to receive text messages from MetaRecruiter regarding job opportunities and application status. Message and data rates may apply.', type: 'checkbox', required: false },
+      { name: 'termsAgree', label: 'I agree to the Terms of Service and Privacy Policy.', type: 'checkbox', required: false },
     ],
   },
 ]
@@ -127,7 +127,7 @@ function FieldRenderer({ field, value, onChange }) {
           name={field.name}
           checked={value}
           onChange={e => onChange(field.name, e.target.checked)}
-          style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+          style={{ marginTop: '0.15rem', width: '24px', height: '24px', minWidth: '24px', cursor: 'pointer', accentColor: C.signal }}
         />
         <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>{field.label}</span>
       </label>

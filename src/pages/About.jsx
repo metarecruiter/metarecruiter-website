@@ -15,7 +15,7 @@ export default function About() {
     <div style={{ background: C.offwhite }}>
       {/* Hero */}
       <div style={{ paddingTop: '9rem', paddingBottom: '6rem', paddingLeft: 'clamp(1.5rem,6vw,7rem)', paddingRight: 'clamp(1.5rem,6vw,7rem)', background: C.ink, position: 'relative', overflow: 'hidden' }}>
-        <img src={ABOUT_IMG} alt="About" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.08, mixBlendMode: 'luminosity' }} />
+        <img src={ABOUT_IMG} alt="About" loading="eager" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.08, mixBlendMode: 'luminosity' }} />
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '760px' }}>
           <span className="font-mono-data text-xs tracking-widest uppercase" style={{ color: C.signal }}>About Meta Recruiter</span>
           <h1 className="font-sans font-bold mt-3" style={{ fontSize: 'clamp(2.5rem,6vw,5rem)', color: '#fff', lineHeight: 1.05, letterSpacing: '-0.03em' }}>

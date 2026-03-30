@@ -21,8 +21,8 @@ function Hero() {
   }, [])
 
   return (
-    <section ref={ref} style={{ height: '100vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', paddingLeft: 'clamp(1.5rem,6vw,7rem)', paddingRight: 'clamp(1.5rem,6vw,7rem)' }}>
-      <img src={HERO_IMG} alt="Highway" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+    <section ref={ref} style={{ height: '100dvh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', paddingLeft: 'clamp(1.5rem,6vw,7rem)', paddingRight: 'clamp(1.5rem,6vw,7rem)' }}>
+      <img src={HERO_IMG} alt="Highway" loading="eager" fetchPriority="high" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(17,17,17,0.97) 0%,rgba(17,17,17,0.55) 55%,rgba(17,17,17,0.2) 100%)' }} />
 
       <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px' }}>
@@ -205,7 +205,7 @@ function Philosophy() {
   }, [])
   return (
     <section id="about" ref={ref} className="section-pad" style={{ background: C.ink, position: 'relative', overflow: 'hidden' }}>
-      <img src={PHILO_IMG} alt="" aria-hidden style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.07, mixBlendMode: 'luminosity' }} />
+      <img src={PHILO_IMG} alt="" aria-hidden loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.07, mixBlendMode: 'luminosity' }} />
       <div style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <p className="font-sans text-lg mb-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
           {'Most recruiters focus on:'.split(' ').map((w, i) => <span key={i} className="philo-word inline-block mr-2">{w}</span>)}
@@ -250,7 +250,7 @@ function HelixSVG() {
 
 function ScannerSVG() {
   const [pos, setPos] = useState(0)
-  useEffect(() => { const id = setInterval(() => setPos(p => (p+1)%85), 28); return () => clearInterval(id) }, [])
+  useEffect(() => { const id = setInterval(() => setPos(p => (p+1)%85), 50); return () => clearInterval(id) }, [])
   const dots = []; for (let r=0;r<5;r++) for (let c=0;c<8;c++) dots.push({x:c*10+5,y:r*14+7})
   return (
     <svg width="85" height="80" viewBox="0 0 85 80" fill="none">
@@ -275,13 +275,19 @@ function Protocol() {
   const cardRefs = useRef([])
   useEffect(() => {
     const cards = cardRefs.current
+    let ticking = false
     const onScroll = () => {
-      cards.forEach((card, i) => {
-        if (i >= cards.length - 1 || !card) return
-        const nextCard = cards[i+1]
-        if (!nextCard) return
-        const progress = Math.max(0, Math.min(1, (window.innerHeight - nextCard.getBoundingClientRect().top) / window.innerHeight))
-        gsap.set(card, { scale: 1-progress*0.08, filter: `blur(${progress*16}px)`, opacity: 1-progress*0.45 })
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        cards.forEach((card, i) => {
+          if (i >= cards.length - 1 || !card) return
+          const nextCard = cards[i+1]
+          if (!nextCard) return
+          const progress = Math.max(0, Math.min(1, (window.innerHeight - nextCard.getBoundingClientRect().top) / window.innerHeight))
+          gsap.set(card, { scale: 1-progress*0.08, filter: `blur(${progress*16}px)`, opacity: 1-progress*0.45 })
+        })
+        ticking = false
       })
     }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -311,7 +317,7 @@ function Protocol() {
                 </div>
               </div>
               <div className="hidden md:block" style={{ position: 'relative', overflow: 'hidden' }}>
-                <img src={step.img} alt={step.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: i === 0 ? 'left center' : 'center', filter: i===1?'grayscale(30%) brightness(0.7)':'grayscale(15%)' }} />
+                <img src={step.img} alt={step.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: i === 0 ? 'left center' : 'center', filter: i===1?'grayscale(30%) brightness(0.7)':'grayscale(15%)' }} />
                 <div style={{ position: 'absolute', inset: 0, background: i===1?'linear-gradient(to right,rgba(17,17,17,0.6) 0%,transparent 60%)':'linear-gradient(to right,rgba(245,243,238,0.4) 0%,transparent 60%)' }} />
               </div>
             </div>

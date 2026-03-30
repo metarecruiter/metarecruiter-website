@@ -188,7 +188,7 @@ function OwnerOpForm() {
           <div>
             <label className="font-sans font-medium text-sm" style={{ color: C.ink, display: 'block', marginBottom: '0.75rem' }}>Preferred route type <span style={{ color: C.signal }}>*</span></label>
             <RadioGroup name="routes" options={[
-              { value: 'OTR', label: 'OTR (Over the Road)' },
+              { value: 'Otr', label: 'OTR (Over the Road)' },
               { value: 'Regional', label: 'Regional' },
               { value: 'Local', label: 'Local' },
             ]} form={form} handle={handle} />
@@ -222,7 +222,7 @@ function OwnerOpForm() {
                 checked={form.smsConsent}
                 onChange={handle}
                 required
-                style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+                style={{ marginTop: '0.15rem', width: '24px', height: '24px', minWidth: '24px', cursor: 'pointer', accentColor: C.signal }}
               />
               <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
                 I consent to receive text messages from MetaRecruiter regarding job opportunities and application status. Message and data rates may apply. <span style={{ color: C.signal }}>*</span>
@@ -237,7 +237,7 @@ function OwnerOpForm() {
                 checked={form.termsAgree}
                 onChange={handle}
                 required
-                style={{ marginTop: '0.25rem', width: '18px', height: '18px', cursor: 'pointer', accentColor: C.signal }}
+                style={{ marginTop: '0.15rem', width: '24px', height: '24px', minWidth: '24px', cursor: 'pointer', accentColor: C.signal }}
               />
               <span className="font-sans text-sm" style={{ color: C.smoke, lineHeight: 1.6 }}>
                 I agree to the Terms of Service and Privacy Policy. <span style={{ color: C.signal }}>*</span>
@@ -384,7 +384,7 @@ export default function OwnerOperator() {
     <div style={{ background: C.offwhite }}>
       {/* Hero */}
       <div style={{ position: 'relative', paddingTop: '9rem', paddingBottom: '6rem', paddingLeft: 'clamp(1.5rem,6vw,7rem)', paddingRight: 'clamp(1.5rem,6vw,7rem)', overflow: 'hidden' }}>
-        <img src={HERO_IMG} alt="Owner Operator" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(15%) brightness(0.3)' }} />
+        <img src={HERO_IMG} alt="Owner Operator" loading="eager" fetchPriority="high" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(15%) brightness(0.3)' }} />
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '760px' }}>
           <span className="font-mono-data text-xs tracking-widest uppercase" style={{ color: C.signal }}>Owner Operator Opportunities</span>
           <h1 className="font-sans font-bold mt-3" style={{ fontSize: 'clamp(2.5rem,6vw,5rem)', color: '#fff', lineHeight: 1.05, letterSpacing: '-0.03em' }}>
